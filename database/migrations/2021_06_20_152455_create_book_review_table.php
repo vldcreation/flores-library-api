@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableBookReview extends Migration
+class CreateBookReviewTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,9 @@ class CreateTableBookReview extends Migration
     {
         Schema::create('book_review', function (Blueprint $table) {
             $table->id();
-            $table->int('id_buku');
-            $table->int('id_user');
-            $table->int('rating');
+            $table->integer('id_buku');
+            $table->integer('id_user');
+            $table->integer('rating');
             $table->text('ulasan');
             $table->timestamps();
         });

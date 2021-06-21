@@ -15,8 +15,8 @@ class CreatePeminjamanTable extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->int('id_user');
-            $table->int('id_buku');
+            $table->integer('id_user');
+            $table->integer('id_buku');
             $table->dateTime('jadwal_pinjam');
             $table->dateTime('jadwal_kembali');
             $table->string('status');
