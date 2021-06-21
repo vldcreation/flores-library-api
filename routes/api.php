@@ -18,9 +18,18 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+//Role
+Route::get('roles','RoleController@getRoles');
+Route::get('role/{id}','RoleController@getRoleById');
+
+Route::post('addRole','RoleController@addRole');
+
+Route::put('updateRole/{id}','RoleController@updateRole');
+
+Route::delete('deleteRole/{id}','RoleController@deleteRole');
+
 //User
-//get API
-Route::get('user','UserController@getUsers');
+Route::get('users','UserController@getUsers');
 Route::get('user/{id}','UserController@getUserById');
 Route::get('user/byEmail/{email}','UserController@getUserByEmail');
 
