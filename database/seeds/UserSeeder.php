@@ -14,8 +14,9 @@ class UserSeeder extends Seeder
         //
         $Cur = DB::table('users')->orderBy('id', 'desc')->first();
         if(!$Cur)
-            $Cur['id'] = 0;
-        $getId = 'user-'.($Cur['id'] + 1);
+            $getId = 0;
+        else
+            $getId = 'user-'.($Cur->id + 1);
         DB::table('users')->insert([
             'role' => 2,
             'name' => "vicktor desrony",
