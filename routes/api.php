@@ -38,3 +38,13 @@ Route::post('addUser','UserController@addUser');
 Route::put('updateUser/{id}','UserController@updateUser');
 
 Route::delete('deleteUser/{id}','UserController@deleteUser');
+
+//Book Category
+Route::get('categorys','BookCategoryController@getCategorys');
+Route::get('category/{id}','BookCategoryController@getCategoryById');
+
+Route::post('addCategory','BookCategoryController@addCategory');
+
+Route::put('updateCategory/{id}','BookCategoryController@updateCategory');
+
+Route::delete('deleteCategory/{id}','BookCategoryController@deleteCategory');
