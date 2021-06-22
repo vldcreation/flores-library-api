@@ -48,3 +48,24 @@ Route::post('addCategory','BookCategoryController@addCategory');
 Route::put('updateCategory/{id}','BookCategoryController@updateCategory');
 
 Route::delete('deleteCategory/{id}','BookCategoryController@deleteCategory');
+
+//Book
+Route::get('books','BookController@getBooks');
+Route::get('book/{id}','BookController@getBookById');
+
+Route::post('addBook','BookController@addBook');
+
+Route::put('updateBook/{id}','BookController@updateBook');
+
+Route::delete('deleteBook/{id}','BookController@deleteBook');
+
+// Book Review
+Route::get('reviews','ReviewController@getReviews');
+Route::get('review/book/{id_buku}','ReviewController@getBookRating'); //get rating by id book
+Route::get('review/{id}','ReviewController@getReviewById');
+
+Route::post('addReview','ReviewController@addReview');
+
+Route::put('updateReview/{id}','ReviewController@updateReview');
+
+Route::delete('deleteReview/{id}','ReviewController@deleteReview');
