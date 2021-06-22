@@ -16,7 +16,7 @@ class SECRETKEY
     public function handle($request, Closure $next)
     {
         $token = $request->header('SECRET_KEY');
-        $SecretKey = '$2y$10$WUUShjUudKM2s2DCK8sZV.Zy.tr.2lWnf/OzhsuI49uzFWZAMas5i';
+        $SecretKey = '$2y$10$qfcI7OcBO0WaOjDWDheu.eJC9YrziEKYmYvUE4J6f5qmSrUdkZRZ.'; //123456
         if(!Hash::check($token,$SecretKey)){
             return response()->json([
                 'message' => 'Invalid Credential API Key'
