@@ -7,7 +7,6 @@ use Illuminate\Notifications\Notifiable;
 
 class Book extends Model
 {
-    //
     use Notifiable;
     public $table = "book";
     protected $fillable = [
