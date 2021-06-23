@@ -39,6 +39,9 @@ Route::put('updateUser/{id}','UserController@updateUser');
 
 Route::delete('deleteUser/{id}','UserController@deleteUser');
 
+//Atuhtentication
+Route::post('auth/login','AuthController@login');
+
 //Book Category
 Route::get('categorys','BookCategoryController@getCategorys');
 Route::get('category/{id}','BookCategoryController@getCategoryById');
