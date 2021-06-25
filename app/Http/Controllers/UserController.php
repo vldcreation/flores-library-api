@@ -31,7 +31,7 @@ class UserController extends Controller
     }
 
     public function getUserByEmail($email){
-        $data = User::where('email',$email);
+        $data = User::where('email',$email)->get();
         if($data){
             return response()->json([
                 'data' => $data,
