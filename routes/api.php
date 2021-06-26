@@ -79,3 +79,18 @@ Route::get('pengumuman/{id}','PengumumanController@getPengumumanById');
 Route::post('tambahPengumuman','PengumumanController@tambahPengumuman');
 Route::put('ubahPengumuman/{id}','PengumumanController@ubahPengumuman');
 Route::delete('hapusPengumuman/{id}','PengumumanController@hapusPengumuman');
+
+//Kategori Pengumuman
+Route::get('kategoriPengumamans','KategoriPengumumanController@getKategoriPengumuman');
+Route::get('KategoriPengumuman/{id}','KategoriPengumumanController@getKategoriPengumumanById');
+Route::post('tambahKategoriPengumuman','KategoriPengumumanController@tambahKategoriPengumuman');
+Route::put('ubahKategoriPengumuman/{id}','KategoriPengumumanController@ubahKategoriPengumuman');
+Route::delete('hapusKategoriPengumuman/{id}','KategoriPengumumanController@hapusKategoriPengumuman');
+
+//Keranjang
+Route::get('keranjangs','KeranjangController@getKeranjangs');
+Route::get('keranjang/book/{id_buku}','KeranjangController@getJumlahKeranjang'); //get rating by id book
+Route::get('keranjang/{id}','KeranjangController@getKeranjangById');
+Route::post('tambahKeranjang','KeranjangController@tambahKeranjang');
+Route::put('ubahKeranjang/{id}','KeranjangController@ubahKeranjang');
+Route::delete('hapusKeranjang/{id}','KeranjangController@hapusKeranjang');
