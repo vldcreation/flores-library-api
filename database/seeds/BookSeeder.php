@@ -16,14 +16,16 @@ class BookSeeder extends Seeder
             "id_kategori"=> 1,
             "isbn"=> "ISBN222222",
             "judul"=> "Ilmu Theologia",
-            "sinopsis"=> "Theologia berasal dari ...",
+            "deskripsi"=> "Theologia berasal dari ...",
             "penulis"=> "Theolog",
             "penerbit"=> "Theodora",
+            "gambar_buku"=>"Buku1.jpg",
             "jlh_halaman"=> 100,
             "bahasa"=> "Indonesia",
             "edisi"=> "56",
             "tahun_terbit"=> 2019,
             "subject"=> "Fiction",
+            "lokasi"=>"Lantai Atas",
         ]);
     }
 }

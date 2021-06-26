@@ -15,7 +15,6 @@ class CreatePengumumanTable extends Migration
     {
         Schema::create('pengumuman', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_pengumuman');
             $table->integer('id_user');
             $table->string('judul');
             $table->text('deskripsi_singkat');
