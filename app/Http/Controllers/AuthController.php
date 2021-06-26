@@ -9,12 +9,10 @@ use App\Http\Controllers\UserController as UserCollection;
 
 class AuthController extends Controller
 {
-    //
     public function login(Request $request){
         $username = $request->input('username');
         $password = $request->input('password');
         $getUser = $this->getUser($username,$password);
-        // return $this->getUser($username,$password);
         if($getUser->count() > 0){
             return response()->json([
                 'data' => $getUser,
@@ -25,8 +23,6 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Username or Password not credential in our Record!'
         ]);
-
-        // return ;
     }
 
     public function getUser($username,$password){
