@@ -5,9 +5,37 @@ namespace App\Http\Controllers;
 use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Resources\StatusCode;
+use Illuminate\Support\Facades\Hash;
 
 class BookController extends Controller
 {
+    public function indexBook(){
+        return view('Book.indexBook');
+    }
+
+    public function store(Request $request){
+        $Book = new Book();
+        if($request->hasfile('file_buku') || $request->hasfile('gambar_buku')){
+            $file = $request->file('file_buku');
+            $file2 = $request->file('gambar_buku');
+            $extension = $file->getClientOriginalExtension();
+            $extension2 = $file2->getClientOriginalExtension();
+            $hashFile = Hash::make($file->getClientOriginalName());
+            $hashFile2 = Hash::make($file2->getClientOriginalName());
+            $filename = $hashFile.'-'.time().'.'.$extension;
+            $filename2 = $hashFile2.'-'.time().'.'.$extension2;
+            // dd($filename);
+            $file->move('assets/file-pdf',$filename);
+            $file2->move('assets/file-image',$filename2);
+            $data = array_merge($request->all(),['file_buku' => $filename,'gambar_buku' => $filename2]);
+            // dd($data);
+            Book::create($data);
+        }else{
+            return $request;
+        }
+        return view('Book.indexBook');
+    }
+
     public function getBooks(){
         $data = Book::all();
         return response()->json([
