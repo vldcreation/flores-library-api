@@ -31,6 +31,12 @@ class ReviewController extends Controller
 
     public function getBookRating($id_buku){
         $data = Review::where('id_buku',$id_buku)->get();
+        // dd($data);
+        if(!$data->count()){
+            return response()->json([
+                'message' => StatusCode::http_response_code(404)
+            ]);
+        }
         $countRecord = $data->count();
         $CountRating = $data->sum('rating');
         return round($CountRating/$countRecord,1);

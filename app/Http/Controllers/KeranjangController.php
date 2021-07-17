@@ -9,8 +9,8 @@ use App\Http\Resources\StatusCode;
 class KeranjangController extends Controller
 {
     //
-    public function getKeranjangs() {
-        $keranjangs = Keranjang::all();
+    public function getKeranjangs($id_user) {
+        $keranjangs = Keranjang::where('id_user',$id_user)->get();
         return response()->json([
             'data' => $keranjangs,
             'message' => StatusCode::http_response_code(200)
@@ -36,8 +36,35 @@ class KeranjangController extends Controller
         return $jlhKeranjang;
     }
 
+    public function getStatus($Now){
+        $status = "";
+        $arrBulan = array('Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember');
+        $arrHari = array('Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu');
+        $dateForPrice = strtotime('+7 day',$Now);
+        $arrDateForPrice = explode('-',date('Y-m-d',$dateForPrice));
+        $arrDateForPrice = array_map('intval', $arrDateForPrice);
+        $numWeekDay = date('N',$dateForPrice);
+        $status = 'jadwal Pengembalian : '.$arrHari[(int) $numWeekDay-1].','.$arrDateForPrice[2].' '.$arrBulan[$arrDateForPrice[1]].' '.$arrDateForPrice[0];
+        return $status;
+    }
+
     public function tambahKeranjang(Request $request) {
-        $keranjangs = Keranjang::create($request->all());
+        date_default_timezone_set("Asia/Jakarta");
+        
+        // return self::getStatus(time());
+        // dd(date('Y-m-d',$dateForPrice));
+        $keranjangs = Keranjang::create(array_merge($request->all(),['status' => self::getStatus(time())]));
         if($keranjangs) {
             return response()->json([
                 'data' => $keranjangs,
