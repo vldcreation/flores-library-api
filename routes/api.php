@@ -88,7 +88,7 @@ Route::put('ubahKategoriPengumuman/{id}','KategoriPengumumanController@ubahKateg
 Route::delete('hapusKategoriPengumuman/{id}','KategoriPengumumanController@hapusKategoriPengumuman');
 
 //Keranjang
-Route::get('keranjangs','KeranjangController@getKeranjangs');
+Route::get('keranjangs/{id_user}','KeranjangController@getKeranjangs');
 Route::get('keranjang/book/{id_buku}','KeranjangController@getJumlahKeranjang'); //get rating by id book
 Route::get('keranjang/{id}','KeranjangController@getKeranjangById');
 Route::post('tambahKeranjang','KeranjangController@tambahKeranjang');
