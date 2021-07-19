@@ -61,7 +61,7 @@ class UserController extends Controller
         if($data){
             $data->update($request->all());
             return response()->json([
-                'data' => $data,
+                'data' => User::find($id),
                 'message' => StatusCode::http_response_code(201)
             ]);
         }

@@ -45,7 +45,7 @@ class BookController extends Controller
     }
 
     public function getBookById($id){
-        $data = Book::find($id);
+        $data = Book::where('id',$id)->orwhere('barcode',$id)->get();
         if($data){
             return response()->json([
                 'data' => $data,

@@ -8,8 +8,8 @@ class BookCategory extends Model
 {
     //
     use Notifiable;
-
     protected $fillable = [
         'nama_kategori'
     ];
+    public $table = 'book_category';
 }

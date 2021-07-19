@@ -45,8 +45,9 @@ class RoleController extends Controller
 
     public function updateRole(Request $request,$id){
         $data = Role::find($id);
-        if($data){
-            $data->update($request->all());
+        if($data->count() > 0){
+            // dd($data);
+            $data->fill($request->all())->save();
             return response()->json([
                 'data' => $data,
                 'message' => StatusCode::http_response_code(201)
