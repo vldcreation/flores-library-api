@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/','HomeController@index');
+Route::get('/demoview','HomeController@demo');
 
 Route::get('/testUpload','BookController@indexBook'); //preview test
 Route::post('/uploadImage','BookController@store')->name('uploadImage');
