@@ -13,4 +13,8 @@ class KategoriPengumuman extends Model
     protected $fillable = [
         'nama_kategori'
     ];
+
+    public function _pengumumans(){
+        return $this->hasMany(Pengumuman::class,'id_kategori','id');
+    }
 }

@@ -15,8 +15,8 @@ class CreateBookReviewTable extends Migration
     {
         Schema::create('book_review', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_buku');
-            $table->integer('id_user');
+            $table->bigInteger('id_buku')->unsigned();
+            $table->bigInteger('id_user')->unsigned();
             $table->integer('rating');
             $table->text('ulasan');
             $table->timestamps();
