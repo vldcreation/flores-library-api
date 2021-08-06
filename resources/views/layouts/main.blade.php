@@ -31,6 +31,31 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Data Tables -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/data-tables/css/datatables.min.css') }}">
+    <!-- [Scroll Icon] start -->
+    <style>
+        .scroll-to-top {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            color: #ffffff;
+            font-size: 18px;
+            text-transform: uppercase;
+            line-height: 40px;
+            text-align: center;
+            z-index: 100;
+            cursor: pointer;
+            background: #3f4d67;
+            display: none;
+            -webkit-transition: all 300ms ease;
+            -moz-transition: all 300ms ease;
+            -ms-transition: all 300ms ease;
+            -o-transition: all 300ms ease;
+            transition: all 300ms ease;
+        }
+    </style>
+    <!-- [Scroll Icon] end -->
 
     
 
@@ -253,6 +278,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="h-list-footer">
             <div class="input-group">
                 <input type="file" class="chat-attach" style="display:none">
@@ -322,6 +348,28 @@
     <!-- Warning Section Ends -->
 
     <!-- Required Js -->
+    <div class="scroll-to-top scroll-to-target" data-target="html" style="display: none;"><span class="fa fa-angle-double-up"></span></div>
+    <!-- [Scroll to Top Event] start -->
+    <script>
+        $(window).scroll(function() {
+            if ($(this).scrollTop() < 100) {
+                $('.scroll-to-target').fadeOut();
+            } else {
+                $('.scroll-to-target').fadeIn();
+            }
+        });
+        if($('.scroll-to-target').length){
+		$(".scroll-to-target").on('click', function() {
+			var target = $(this).attr('data-target');
+		   // animate
+		   $('html, body').animate({
+			   scrollTop: $(target).offset().top
+			 }, 1500);
+	
+		});
+	}
+    </script>
+    <!-- [Scroll to Top Event] end -->
     <script src="../assets/js/vendor-all.min.js"></script>
 	<script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="../assets/js/menu-setting.min.js"></script>

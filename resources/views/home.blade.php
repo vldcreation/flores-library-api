@@ -352,11 +352,13 @@ $bookCategorys = BookCategory::all();
                                                                 <div class="row">
                                                                 <form class="form-inline" action="{{route('editcat',$category->id)}}" method="POST">
                                                                     @csrf
-                                                                <div class="form-group mb-2">
+                                                                <div class="form-group mr-2 mb-2">
                                                                     <label for="Nama Kategori" class="sr-only">Nama Kategori</label>
                                                                     <input type="text" name="nama_kategori" class="form-control" id="namakat" value="{{$category->nama_kategori}}">
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary mb-2">submit</button>
+                                                                <div class="form-group mr-2">
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                             </form>
                                                                 </div>
                                                         </div>
@@ -737,5 +739,45 @@ $bookCategorys = BookCategory::all();
                 </div>
             </div>
         </div>
+
+        <!-- [Smooth Scrollable] start -->
+        <script>
+            $('a[href*="#"]')
+            // Remove links that don't actually link to anything
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function(event) {
+                // On-page links
+                if (
+                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+                && 
+                location.hostname == this.hostname
+                ) {
+                // Figure out element to scroll to
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                // Does a scroll target exist?
+                if (target.length) {
+                    // Only prevent default if animation is actually gonna happen
+                    event.preventDefault();
+                    $('html, body').animate({
+                    scrollTop: target.offset().top
+                    }, 1000, function() {
+                    // Callback after animation
+                    // Must change focus!
+                    var $target = $(target);
+                    $target.focus();
+                    if ($target.is(":focus")) { // Checking if the target was focused
+                        return false;
+                    } else {
+                        $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                        $target.focus(); // Set focus again
+                    };
+                    });
+                }
+                }
+            });
+        </script>
+        <!-- [Smooth Scrollable] end -->
         
 @endsection
