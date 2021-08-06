@@ -7,6 +7,27 @@ use Illuminate\Http\Request;
 use App\Http\Resources\StatusCode;
 class BookCategoryController extends Controller
 {
+    public function store(Request $request){
+        BookCategory::create($request->all());
+        return redirect()->route('admin.index');
+    }
+
+    public function update(Request $request , $id){
+        $data = BookCategory::find($id);
+        if($data->count()>0){
+            $data->update($request->all());
+            return redirect()->route('admin.index');
+        }
+        abort(404);
+    }
+    
+    public function destroy($id){
+        $data = BookCategory::find($id);
+        if($data->count>0)
+            $data->delete();
+        return redirect()->route('admin.index');
+    }
+
     public function getCategorys(){
         $data = BookCategory::all();
         return response()->json([

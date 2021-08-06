@@ -817,6 +817,7 @@ footer img {
     document.execCommand("copy");
     alert("Text has been copied, now paste in the text-area")
 }
+    }
 </script>
 
 </body>

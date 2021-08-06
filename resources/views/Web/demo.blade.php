@@ -22,10 +22,9 @@ use App\BookCategory;
     @foreach($data as $book)
   <div class="card">
     <div class="card-header">
-      <img src=" {{ asset('assets/file-image/'.$book->gambar_buku) }}" alt="rover" />
+      <img src=" {{ asset('assets/file-image/'.$book->gambar_buku) }}" style="height:160px;width:120px;" alt="rover" />
     </div>
     <div class="card-body">
-      <span class="tag tag-teal"><?php echo BookCategory::where('id',$book->id_kategori)->get()[0]->nama_kategori;  ?></span> 
       <h4>
         {{ $book->judul }}
       </h4>

@@ -15,8 +15,8 @@ class CreateKeranjangTable extends Migration
     {
         Schema::create('keranjang', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user');
-            $table->integer('id_buku');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_buku');
             $table->string('status');
             $table->timestamps();
         });

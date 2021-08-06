@@ -23,6 +23,10 @@
             <input type="text" name="isbn" class="form-control">
         </div>
         <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Barcode</label>
+            <input type="text" name="barcode" class="form-control">
+        </div>
+        <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">judul</label>
             <input type="text" name="judul" class="form-control">
         </div>
@@ -45,10 +49,6 @@
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">file_buku</label>
             <input type="file" name="file_buku" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">jlh_halaman</label>
-            <input type="text" name="jlh_halaman" class="form-control">
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">bahasa</label>
