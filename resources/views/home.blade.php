@@ -4,6 +4,7 @@
 <?php
 
 use App\BookCategory;
+use App\Role;
 $bookCategorys = BookCategory::all();
 ?>
 <style>
@@ -98,10 +99,10 @@ $bookCategorys = BookCategory::all();
                                 <div class="col-md-6 col-xl-4">
                                     <div class="card">
                                             <div class="card-block">
-                                                <h6 class="mb-4">Book</h6>
+                                                <h6 class="mb-4">Buku</h6>
                                                 <div class="row d-flex align-items-center">
                                                     <div class="col-9">
-                                                        <h3 class="f-w-300 d-flex align-items-center  m-b-0"> {{ $books->count() }} </h3>
+                                                        <h3 class="f-w-300 d-flex align-items-center  m-b-0"> {{ $books->sum('jumlah_buku') }} </h3>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,7 +111,7 @@ $bookCategorys = BookCategory::all();
                                 <!-- [ Book section ] end -->
 
                                 <!-- [ Book Category header section ] start -->
-                                <div class="col-md-12 col-xl-4">
+                                <div class="col-md-6 col-xl-4">
                                     <div class="card">
                                         <div class="card-block">
                                             <h6 class="mb-4">Kategori Buku</h6>
@@ -125,7 +126,7 @@ $bookCategorys = BookCategory::all();
                                 <!-- [ Book Category header section ] end -->
 
                                  <!-- [ Members headers section ] start -->
-                                <div class="col-md-12 col-xl-4">
+                                <div class="col-md-6 col-xl-4">
                                     <div class="card">
                                         <div class="card-block">
                                             <h6 class="mb-4">Anggota</h6>
@@ -138,6 +139,21 @@ $bookCategorys = BookCategory::all();
                                     </div>
                                 </div>
                                 <!-- [ Members headers section ] end -->
+
+                                <!-- [ Loan Book section ] start -->
+                                <div class="col-md-6 col-xl-4">
+                                    <div class="card">
+                                            <div class="card-block">
+                                                <h6 class="mb-4">Buku Dipinjam</h6>
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-9">
+                                                        <h3 class="f-w-300 d-flex align-items-center  m-b-0"> {{ $peminjamans->count() }} </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <!-- [ Loan Book section ] end -->
 
                                 <!-- [ Members Section ] start -->
                                 <div class="col-sm-12" id="kelola-anggota">
@@ -159,98 +175,159 @@ $bookCategorys = BookCategory::all();
                                             </div>
                                         </div>
                                         <div class="card-block">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahCategory">Tambah Data</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahMembers">Tambah Data</button>
                                             <p>Daftar Anggota Members di perpustakaan {{ config('app.name') }}</p>
                                             <div class="table-responsive">
                                                 <table id="zero-configuration" class="display table nowrap table-striped table-hover" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>Nama Kategori</th>
+                                                            <th>Nama</th>
+                                                            <th>Email</th>
+                                                            <th>No Telp</th>
+                                                            <th>Tanggal Lahir</th>
+                                                            <th>Jenis Kelamin</th>
+                                                            <th>Alamat</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($bookCategorys as $key=>$category)
+                                                        @foreach($members as $key=>$member)
                                                         <tr>
-                                                            <td>{{ $category->nama_kategori }}</td>
+                                                            <td>{{ $member->name }}</td>
+                                                            <td>{{ $member->email }}</td>
+                                                            <td>{{ str_replace('+62','0',str_replace('-','',$member->no_telp)) }}</td>
+                                                            <td>{{ $member->tanggal_lahir }}</td>
+                                                            <td>{{ $member->jenis_kelamin }}</td>
+                                                            <td>{{ $member->alamat }}</td>
                                                             <td>
-                                                                <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-category-{{$category->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
-                                                                <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modal-edit-category-{{$category->id}}" type="button"><i class="feather icon-edit"></i></button>
-                                                                <button class="btn btn-sm drp-icon btn-danger delete-confirm" data-whatever="{{ $category->judul }}" data-target="{{ route('deletecat',$category->id) }}"  type="button"><i class="feather icon-trash-2"></i></button>
+                                                                <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-member-{{$member->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
+                                                                <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modal-edit-member-{{$member->id}}" type="button"><i class="feather icon-edit"></i></button>
+                                                                <button class="btn btn-sm drp-icon btn-danger delete-confirm" data-whatever="{{ $member->judul }}" data-target="{{ route('deleteMember',$member->id) }}"  type="button"><i class="feather icon-trash-2"></i></button>
                                                             </td>
                                                         </tr>
 
-                                                        <!-- [Lihat Detail Category] start -->
-                                            <div class="modal fade" id="modal-detail-category-{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-detail-categoryLabel" style="display: none;" aria-hidden="true">
+                                                        <!-- [Lihat Detail Member] start -->
+                                                        <div class="modal fade" id="modal-detail-member-{{$member->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Karegori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">{{$member->name}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="container-fluid">
                                                                 <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <label for="List Buku by Kategori">
-                                                                            List Buku :
-                                                                        </label>
-                                                                        @if($bookCategorys[$category->id-1]->allbooks->count() < 1)
-                                                                        Data Tidak Tersedia
-                                                                        @else
-                                                                            @foreach($bookCategorys[$category->id-1]->allbooks as $obj)
-                                                                                <div class="col-12 col-sm-12">
-                                                                                    {{$obj->judul}}
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @endif
+                                                                <div class="col-md-6">
+                                                                    <lable>Email : </lable>
+                                                                    {{$member->email}}
+                                                                </div>
+                                                                <div class="col-md-4 ms-auto img-path">
+                                                                    <img src=" {{ asset(Storage::url('public/user/'.$member->profile)) }}" alt="">
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                    <span class="badge badge-pill badge-info">{{ $member->no_telp }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-sm-9">
+                                                                    <div class="row">
+                                                                    <div class="col-8 col-sm-12">
+                                                                        <label>Tanggal Lahir : </label>
+                                                                        {{$member->tanggal_lahir}}
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                    <div class="col-8 col-sm-12">
+                                                                        <label>Jenis Kelamin : </label>
+                                                                        {{$member->jenis_kelamin}}
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                    <div class="col-8 col-sm-12">
+                                                                        <label>Alamat : </label>
+                                                                        {{$member->alamat}}
+                                                                    </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                                <!-- [Lihat Detail Category] end -->
+                                                <!-- [Lihat Detail Member] end -->
 
-                                                <!-- [Edit Category Buku ] start -->
-                                                <div class="modal fade" id="modal-edit-category-{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-detail-categoryLabel" style="display: none;" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                <!-- [Edit  Member] end -->
+                                                <div class="modal fade" id="modal-edit-member-{{$member->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Karegori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Data - {{ $member->name }}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                <form class="form-inline" action="{{route('editcat',$category->id)}}" method="POST">
-                                                                    @csrf
-                                                                <div class="form-group mb-2">
-                                                                    <label for="Nama Kategori" class="sr-only">Nama Kategori</label>
-                                                                    <input type="text" name="nama_kategori" class="form-control" id="namakat" value="{{$category->nama_kategori}}">
+                                                        <form action="{{ route('editmember',$member->id) }}" method="POST" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{$member->id}}">
+                                                            <div class="mb-3">
+                                                                <label for="role" class="form-label">Role Akses</label>
+                                                                <select name="role" class="form-control">
+                                                                    @foreach($roles as $key=>$role)
+                                                                    <option value="{{ $role->id }}" {{($role->id == $member->role) ? 'selected' : ''}}>{{$role->role_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="name" class="form-label">Nama Member</label>
+                                                                <input type="text" name="name" value="{{$member->name}}" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Email</label>
+                                                                <input type="text" name="email" value="{{$member->email}}" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="aktivasi" class="form-label">Aktivasi</label>
+                                                                <select name="is_active" class="form-control">
+                                                                    <option value="true" {{($member->is_active == 1) ? 'selected' : ''}}>Aktif</option>
+                                                                    <option value="false" {{($member->is_active == 0) ? 'selected' : ''}}>Non-Aktif</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4 img-path">
+                                                                    <label> Profile : </label>
+                                                                    <img src="{{ Storage::url('public/user/'.$member->profile) }}" alt="{{$member->name}}">
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary mb-2">submit</button>
+                                                                <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
+                                                                    <input type="file" name="profile" value="{{$member->profile}}" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
-                                                                </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                         </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                                <!-- [Edit Category Buku] end -->
+                                                <!-- [Edit Members] end -->
                                                         
                                                         @endforeach
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>Nama Kategori</th>
+                                                            <th>Nama</th>
+                                                            <th>Email</th>
+                                                            <th>No Telp</th>
+                                                            <th>Tanggal Lahir</th>
+                                                            <th>Jenis Kelamin</th>
+                                                            <th>Alamat</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </tfoot>
@@ -308,7 +385,7 @@ $bookCategorys = BookCategory::all();
                                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Karegori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Kategori : {{$category->nama_kategori}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -323,7 +400,9 @@ $bookCategorys = BookCategory::all();
                                                                         @else
                                                                             @foreach($bookCategorys[$category->id-1]->allbooks as $obj)
                                                                                 <div class="col-12 col-sm-12">
-                                                                                    {{$obj->judul}}
+                                                                                    <ul>
+                                                                                        <li>{{$obj->judul}}</li>
+                                                                                    </ul>
                                                                                 </div>
                                                                             @endforeach
                                                                         @endif
@@ -392,7 +471,7 @@ $bookCategorys = BookCategory::all();
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>Data Buku</h5>
-                                            <!-- <div class="card-header-right">
+                                            <div class="card-header-right">
                                                 <div class="btn-group card-option">
                                                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="feather icon-more-horizontal"></i>
@@ -404,7 +483,7 @@ $bookCategorys = BookCategory::all();
                                                         <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
                                                     </ul>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
                                         <div class="card-block">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Data</button>
@@ -426,7 +505,7 @@ $bookCategorys = BookCategory::all();
                                                             <td>{{ $book->barcode }}</td>
                                                             <td>{{ $book->isbn }}</td>
                                                             <td>{{ $book->judul }}</td>
-                                                            <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
+                                                            <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;border:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#exampleModal-{{$book->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
                                                                 <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modalEdit-{{$book->id}}" type="button"><i class="feather icon-edit"></i></button>
@@ -490,13 +569,10 @@ $bookCategorys = BookCategory::all();
                                                                         {{$book->lokasi}}
                                                                     </div>
                                                                     </div>
-                                                                    @if (!is_null($book->file_buku))
                                                                         <div class="row">
                                                                             <div class="col-sm-12">
-                                                                                <a href="{{ route('getbook',$book->file_buku) }}" target="_blank" class="btn btn-md btn-primary">Download E-Book</a>
                                                                             </div>
                                                                         </div>
-                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -566,8 +642,7 @@ $bookCategorys = BookCategory::all();
                                                                 <div class="col-md-4">
                                                                     <label for="file buku">
                                                                         File saat ini : 
-                                                                    </label>
-                                                                    <a href="{{ route('getbook',$book->file_buku) }}" target="_blank" class="btn btn-md btn-primary">Download E-Book</a>
+                                                                    </label>getbook
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto">
                                                                     <label for="exampleInputEmail1" class="form-label">file_buku</label>
@@ -593,6 +668,10 @@ $bookCategorys = BookCategory::all();
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">lokasi</label>
                                                                 <input type="text" name="lokasi" value="{{$book->lokasi}}" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1" class="form-label">lokasi</label>
+                                                                <input type="number" value="{{$book->jumlah_buku}}" name="jumlah_buku" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
@@ -623,6 +702,128 @@ $bookCategorys = BookCategory::all();
                                     </div>
                                 </div>
                                 <!-- [ Recent Book ] end -->
+
+                                <!-- [ Data Peminjaman Buku ] start -->
+                                <div class="col-sm-12" id="data-peminjaman-buku">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Data Peminjaman Buku</h5>
+                                            <div class="card-header-right">
+                                                <div class="btn-group card-option">
+                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="feather icon-more-horizontal"></i>
+                                                    </button>
+                                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(54px, 41px, 0px);">
+                                                        <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                                        <li class="dropdown-item minimize-card"><a href="#!"><span ><i class="feather icon-minus"></i> collapse</span><span style="display: none;"><i class="feather icon-plus"></i> expand</span></a></li>
+                                                        <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                                        <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <p>Daftar Alokasi peminjaman buku yang terdapat pada perpustakaan {{ config('app.name') }}</p>
+                                            <div class="table-responsive">
+                                                <table id="table3" class="display table nowrap table-striped table-hover datatable" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama Member</th>
+                                                            <th>List Buku</th>
+                                                            <th>Tools</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($members as $key=>$member)
+                                                        <tr>
+                                                            @if($member->_peminjamans->count()>0)
+                                                            <td>{{ $member->name}}</td>
+                                                            <td>
+                                                                <ul>
+                                                                    @foreach($member->_peminjamans as $loan)
+                                                                    <li>{{$loan->_book['judul']}}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-data-peminjaman" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
+                                                            </td>
+                                                            @endif
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Nama Member</th>
+                                                            <th>List Buku</th>
+                                                            <th>Tools</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ Recent Data Peminjaman Buku ] end -->
+
+                                <!-- [Modal Tambah Members] start -->
+                                <!-- Scrollable modal -->
+                                <div class="modal fade" id="modalTambahMembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                                                                @csrf
+                                                            <div class="mb-3">
+                                                                <label for="role">Role</label>
+                                                                <select name="role" class="form-control">
+                                                                    @foreach($roles as $key=>$role)
+                                                                    <option value="{{ $role->id }}" {{($role->id == 3 ? 'selected' : '')}}>{{$role->role_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="name" class="form-label">Nama Lengkap</label>
+                                                                <input type="text" name="name" placeholder="eg : Jhony" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="JK" class="form-label">Jenis Kelaim</label>
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" class="custom-control-input" value="pria" id="customControlValidation2" name="jenis_kelamin" required="">
+                                                                    <label class="custom-control-label" for="customControlValidation2">Pria</label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio mb-3">
+                                                                    <input type="radio" class="custom-control-input" value="wanita" id="customControlValidation3" name="jenis_kelamin" required="">
+                                                                    <label class="custom-control-label" for="customControlValidation3">Wanita</label>
+                                                                    <div class="invalid-feedback">More example invalid feedback text</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Email</label>
+                                                                <input type="text" name="email" placeholder="eg : jhonny@gmail.com" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="username" class="form-label">Username</label>
+                                                                <input type="text" name="username" placeholder="eg : jhonny... " class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="password" class="form-label">Password</label>
+                                                                <input type="password" name="password" placeholder="choose password..." class="form-control">
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                <!-- [Modal Tambah Members] end-->
 
                                 <!-- [Modal Tambah Category] start -->
                                 <div class="modal fade" id="modalTambahCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -670,16 +871,16 @@ $bookCategorys = BookCategory::all();
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">ISBN</label>
-                                                                <input type="text" name="isbn" class="form-control">
-                                                            </div>
-                                                            <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">Barcode</label>
                                                                 <input type="text" name="barcode" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">judul</label>
                                                                 <input type="text" name="judul" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1" class="form-label">ISBN</label>
+                                                                <input type="text" name="isbn" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">deskripsi</label>
@@ -720,6 +921,10 @@ $bookCategorys = BookCategory::all();
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">lokasi</label>
                                                                 <input type="text" name="lokasi" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
+                                                                <input type="number" name="jumlah_buku" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
