@@ -16,43 +16,39 @@ class BookController extends Controller
     }
 
     public function store(Request $request){
-        $Book = new Book();
-        if($request->hasfile('file_buku') && $request->hasfile('gambar_buku')){
-            $file = $request->file('file_buku');
-            $file2 = $request->file('gambar_buku');
+        $data2 = array();
+        if($request->hasfile('gambar_buku')){
+            $file = $request->file('gambar_buku');
             $extension = $file->getClientOriginalExtension();
-            $extension2 = $file2->getClientOriginalExtension();
-            $hashFile = Hash::make($file->getClientOriginalName());
-            $hashFile2 = Hash::make($file2->getClientOriginalName());
-            $filename = $hashFile.'-'.time().'.'.$extension;
-            $filename2 = $hashFile2.'-'.time().'.'.$extension2;
-            $lastfilename = str_replace('/', '', $filename);
-            $lastfilename2 = str_replace('/', '', $filename2);
-            // dd($filename);
-            // $file->move('assets/file-pdf',$lastfilename);
-            // $file2->move('assets/file-image',$lastfilename2);
-            $path1 = $file->storeAs(
-                'public/file-pdf', $lastfilename
+            $namefile = str_replace('/','',Hash::make($file->getClientOriginalName()));
+            $lastfilename = $namefile.'.'.$extension;
+            $path = $file->storeAs(
+                'public/file-image',$lastfilename
             );
-            $path2 = $file2->storeAs(
-                'public/file-image', $lastfilename2
-            );
-            $data = array_merge($request->all(),
-            ['file_buku' => $lastfilename,'gambar_buku' => $lastfilename2,
-            'path_gambar' => $path2,'path_file' => $path1
-            ]);
-            // dd($data);
-            Book::create($data);
-        }else{
-            return $request;
+            $data2 = array_merge($request->all(),['gambar_buku' => $lastfilename,
+            'path_gambar' => $path]);
+
         }
+        if($request->hasfile('file_buku')){
+            $file = $request->file('file_buku');
+            $extension = $file->getClientOriginalExtension();
+            $namefile = str_replace('/','',Hash::make($file->getClientOriginalName()));
+            $lastfilename = $namefile.'.'.$extension;
+            $path = $file->storeAs(
+                'public/file-pdf',$lastfilename
+            );
+            $data2 = array_merge($data2,['file_buku' => $lastfilename,
+            'path_file' => $path]);
+        }
+        Book::create($data2);
         return redirect()->route('admin.index');
     }
 
     public function update(Request $request , $id){
         $data = Book::find($id);
         $data2 = array();
-        if($data){
+        // dd($request->all());
+        if($data->count()>0){
             if($request->hasfile('gambar_buku')){
                 $file = $request->file('gambar_buku');
                 $extension = $file->getClientOriginalExtension();
@@ -63,6 +59,8 @@ class BookController extends Controller
                 );
                 $data2 = array_merge($request->all(),['gambar_buku' => $lastfilename,
                 'path_gambar' => $path]);
+                $data->update($data2);
+                return redirect()->route('admin.index');
     
             }
             if($request->hasfile('file_buku')){
@@ -75,8 +73,10 @@ class BookController extends Controller
                 );
                 $data2 = array_merge($data2,['file_buku' => $lastfilename,
                 'path_file' => $path]);
+                $data->update($data2);
+                return redirect()->route('admin.index');
             }
-            $data->update($data2);
+            $data->update($request->all());
             return redirect()->route('admin.index');
         }
         else{

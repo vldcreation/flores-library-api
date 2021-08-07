@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
-use App\BookCategory;
+use App\Http\Resources\StatusCode;
 use App\Peminjaman;
-use App\User;
-use App\Role;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Storage;
 
-class AdminController extends Controller
+class PeminjamanController extends Controller
 {
+    public function getPeminjamans($id_User){
+        $data = Peminjaman::where('id_user',$id_User)->get();
+        if($data->count() > 0){
+            // data available
+            return response()->json([
+                'data' => $data
+            ],StatusCode::http_response_code(200));
+        }
+        else{
+            return response()->json([
+                'message' => 'Tidak ada peminjaman'
+            ],200);
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,21 +30,6 @@ class AdminController extends Controller
     public function index()
     {
         //
-        $books = Book::all();
-        $categorys = BookCategory::all();
-        $members = User::where('role',3)->get();
-        $roles = Role::all();
-        $peminjamans = Peminjaman::all();
-        // $laonUsers = User::where('id',3)->first()->_peminjamans->count();
-        // dd($laonUsers);
-        return view('home',['books' => $books,'members' => $members,
-        'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans
-        ]);
-    }
-
-    public function getBook($book_path){
-        // dd($book_path);
-        return response()->download(storage_path('/app/public/file-pdf/'. $book_path));
     }
 
     /**
@@ -102,16 +96,5 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function deleteBook($id){
-        $book = Book::findOrFail($id);
-        if($book){
-            $book->delete();
-            return redirect()->route('admin.index')
-            ->with('success','User deleted successfully');
-        }else{
-            return redirect()->route('admin.index');
-        }
     }
 }
