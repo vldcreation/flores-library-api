@@ -3,6 +3,7 @@
 // use App\Http\Controllers\BookCategoryController;
 
 use App\BookCategory;
+use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','HomeController@index');
 Route::get('/demoview','HomeController@demo');
-Route::get('getBook/{bookname}', 'AdminController@getBook')->name('getbook');
+// Route::get('getBook/{bookname}', 'AdminController@getBook')->name('getbook');
 
 Route::get('/testUpload','BookController@indexBook')->name('testUpload'); //preview test
 Route::post('/uploadImage','BookController@store')->name('uploadImage');
@@ -28,6 +29,12 @@ Route::post('/editBuku/{id}','BookController@update')->name('editbuku');
 Route::resource('admin', AdminController::class);
 Route::resource('category', BookCategoryController::class);
 Route::post('/editCategory/{id}', 'BookCategoryController@update')->name('editcat');
+Route::resource('users', UserController::class);
+Route::post('/editMember/{id}', 'UserController@update')->name('editmember');
+Route::get('deleteMember/{id}', function ($id) {
+    User::find($id)->delete();
+    return redirect()->route('admin.index');
+})->name('deleteMember');
 Route::get('cattegory/{id}', function ($id) {
     BookCategory::find($id)->delete();
     return redirect()->route('admin.index');

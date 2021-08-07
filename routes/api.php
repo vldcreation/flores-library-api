@@ -94,3 +94,10 @@ Route::get('keranjang/{id}','KeranjangController@getKeranjangById');
 Route::post('tambahKeranjang','KeranjangController@tambahKeranjang');
 Route::put('ubahKeranjang/{id}','KeranjangController@ubahKeranjang');
 Route::delete('hapusKeranjang/{id}','KeranjangController@hapusKeranjang');
+
+// Peminjaman
+Route::get('peminjamans/{id_user}','PeminjamanController@getPeminjamans'); // get data by id user
+Route::get('peminjamans/{id_user}/{id_buku}','PeminjamanController@getPeminjamanDetail');
+Route::post('tambahPeminjaman','PeminjamanController@getPeminjamanDetail');
+Route::put('ubahPeminjaman/{id}','PeminjamanController@getPeminjamanDetail');
+Route::delete('hapusPeminjaman/{id}','PeminjamanController@getPeminjamanDetail');
