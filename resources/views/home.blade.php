@@ -741,7 +741,61 @@ $bookCategorys = BookCategory::all();
                                                             <td>
                                                                 <ul>
                                                                     @foreach($member->_peminjamans as $loan)
-                                                                    <li>{{$loan->_book['judul']}}</li>
+                                                                    <li>
+                                                                        <a  data-toggle="modal" data-target="#loan-detail-{{$loan->id}}" data-whatever="@hehe">
+                                                                            {{$loan->_book['judul']}}
+                                                                        </a>
+                                                                    </li>
+
+                                                                     <!-- [Lihat Detail Loan] start -->
+                                            <div class="modal fade" id="loan-detail-{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-detail-categoryLabel" style="display: none;" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <div class="row">
+                                                                <?php
+                                                                    // get only 3 words
+                                                                    $result = '';
+                                                                    $str = "i want to buy a new car";
+                                                                    preg_match("/\S*\s\S*\s\S*\s\S*\s\S*/", $loan->_book['judul'], $result);
+                                                                ?>
+                                                                    <h5 class="modal-title" style="padding-left:20px;" id="exampleModalLabel"><?= $result[0].'...' ?></h5>
+                                                            </div>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <table width="100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Jadwal Pinjam</th>
+                                                                                    <th>Jadwal Kembali</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        {{$loan->jadwal_pinjam}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$loan->jadwal_kembali}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                <!-- [Lihat Detail Loan] end -->
                                                                     @endforeach
                                                                 </ul>
                                                             </td>

@@ -98,6 +98,6 @@ Route::delete('hapusKeranjang/{id}','KeranjangController@hapusKeranjang');
 // Peminjaman
 Route::get('peminjamans/{id_user}','PeminjamanController@getPeminjamans'); // get data by id user
 Route::get('peminjamans/{id_user}/{id_buku}','PeminjamanController@getPeminjamanDetail');
-Route::post('tambahPeminjaman','PeminjamanController@getPeminjamanDetail');
-Route::put('ubahPeminjaman/{id}','PeminjamanController@getPeminjamanDetail');
-Route::delete('hapusPeminjaman/{id}','PeminjamanController@getPeminjamanDetail');
+Route::post('tambahPeminjaman','PeminjamanController@addPeminjaman');
+Route::put('ubahPeminjaman/{id}','PeminjamanController@ubahPeminjaman');
+Route::delete('hapusPeminjaman/{id}','PeminjamanController@hapusPeminjaman');
