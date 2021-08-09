@@ -74,7 +74,7 @@ Route::put('updateReview/{id}','ReviewController@updateReview');
 Route::delete('deleteReview/{id}','ReviewController@deleteReview');
 
 // Pengumuman 
-Route::get('pengumamans','PengumumanController@getPengumuman');
+Route::get('pengumumans','PengumumanController@getPengumuman');
 Route::get('pengumuman/{id}','PengumumanController@getPengumumanById');
 Route::post('tambahPengumuman','PengumumanController@tambahPengumuman');
 Route::put('ubahPengumuman/{id}','PengumumanController@ubahPengumuman');

@@ -35,7 +35,7 @@ class AdminController extends Controller
 
     public function getBook($book_path){
         // dd($book_path);
-        return response()->download(storage_path('/app/public/file-pdf/'. $book_path));
+        return response()->download(storage_path('app/public/file-pdf/'. $book_path));
     }
 
     /**

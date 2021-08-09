@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','HomeController@index');
 Route::get('/demoview','HomeController@demo');
-// Route::get('getBook/{bookname}', 'AdminController@getBook')->name('getbook');
+Route::get('getBook/{bookname}', 'AdminController@getBook')->name('getbook');
 
 Route::get('/testUpload','BookController@indexBook')->name('testUpload'); //preview test
 Route::post('/uploadImage','BookController@store')->name('uploadImage');
