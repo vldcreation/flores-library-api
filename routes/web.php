@@ -4,6 +4,7 @@
 
 use App\BookCategory;
 use App\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,4 +44,8 @@ Route::get('delleteBook/{id}','AdminController@deleteBook')->name('deletebook');
 
 Route::get('test/{name}',function($name){
     return 'Hello '.$name;
+});
+
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
 });

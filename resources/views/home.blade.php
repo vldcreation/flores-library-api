@@ -5,6 +5,7 @@
 
 use App\BookCategory;
 use App\Role;
+use Illuminate\Support\Str;
 $bookCategorys = BookCategory::all();
 ?>
 <style>
@@ -504,7 +505,7 @@ $bookCategorys = BookCategory::all();
                                                         <tr>
                                                             <td>{{ $book->barcode }}</td>
                                                             <td>{{ $book->isbn }}</td>
-                                                            <td>{{ $book->judul }}</td>
+                                                            <td>{{ $book->judul }}<span class="badge badge-pill badge-info pr-2" style="margin-left:10px">{{$book->jumlah_buku}} buku</span></td>
                                                             <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;border:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#exampleModal-{{$book->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
@@ -570,7 +571,10 @@ $bookCategorys = BookCategory::all();
                                                                     </div>
                                                                     </div>
                                                                         <div class="row">
-                                                                            <div class="col-sm-12">
+                                                                            <div class="col-8 col-sm-12">
+                                                                            @if(Str::length($book->file_buku) > 0)
+                                                                            <a target="_blank" href="{{route('getbook',$book->file_buku)}}" class="btn btn-primary">Download E-Book</a>
+                                                                            @endif
                                                                             </div>
                                                                         </div>
                                                                 </div>
@@ -641,7 +645,10 @@ $bookCategorys = BookCategory::all();
                                                             <div class="row">
                                                                 <div class="col-md-4">
                                                                     <label for="file buku">
-                                                                        File saat ini : 
+                                                                        File saat ini :
+                                                                        @if(Str::length($book->file_buku) > 0)
+                                                                            <a target="_blank" href="{{route('getbook',$book->file_buku)}}" class="btn btn-primary">Download E-Book</a>
+                                                                        @endif
                                                                     </label>getbook
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto">
@@ -670,7 +677,7 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="lokasi" value="{{$book->lokasi}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">lokasi</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
                                                                 <input type="number" value="{{$book->jumlah_buku}}" name="jumlah_buku" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
