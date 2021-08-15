@@ -223,7 +223,7 @@ $bookCategorys = BookCategory::all();
                                                                     {{$member->email}}
                                                                 </div>
                                                                 <div class="col-md-4 ms-auto img-path">
-                                                                    <img src=" {{ asset(Storage::url('public/user/'.$member->profile)) }}" alt="">
+                                                                    <img src="{{ route('getimg',$member->profile) }}" alt="">
                                                                 </div>
                                                                 </div>
                                                                 <div class="row">
@@ -301,7 +301,7 @@ $bookCategorys = BookCategory::all();
                                                             <div class="row">
                                                                 <div class="col-md-4 img-path">
                                                                     <label> Profile : </label>
-                                                                    <img src="{{ Storage::url('public/user/'.$member->profile) }}" alt="{{$member->name}}">
+                                                                    <img src="{{ route('getimg',$member->profile) }}">
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
                                                                     <input type="file" name="profile" value="{{$member->profile}}" class="form-control">
@@ -530,7 +530,7 @@ $bookCategorys = BookCategory::all();
                                                                     {{$book->penulis}}
                                                                 </div>
                                                                 <div class="col-md-4 ms-auto img-path">
-                                                                    <img src=" {{ asset(Storage::url($book->path_gambar)) }}" alt="">
+                                                                    <img src="{{ route('getimg',$book->gambar_buku) }}" alt="">
                                                                 </div>
                                                                 </div>
                                                                 <div class="row">
@@ -636,7 +636,7 @@ $bookCategorys = BookCategory::all();
                                                             <div class="row">
                                                                 <div class="col-md-4 img-path">
                                                                     <label> gambar saat ini : </label>
-                                                                    <img src="{{ Storage::url($book->path_gambar) }}" alt="{{$book->gambar_buku}}">
+                                                                    <img src="{{ route('getimg',$book->gambar_buku) }}" alt="{{$book->gambar_buku}}">
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
                                                                     <input type="file" name="gambar_buku" value="{{$book->gambar_buku}}" class="form-control">

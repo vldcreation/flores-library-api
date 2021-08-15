@@ -5,6 +5,8 @@
 use App\BookCategory;
 use App\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +30,7 @@ Route::post('/editBuku/{id}','BookController@update')->name('editbuku');
 
 // Route Resources
 Route::resource('admin', AdminController::class);
+Route::get('books/{id}', 'BookController@show')->name('loadDetail');
 Route::resource('category', BookCategoryController::class);
 Route::post('/editCategory/{id}', 'BookCategoryController@update')->name('editcat');
 Route::resource('users', UserController::class);
@@ -49,3 +52,26 @@ Route::get('test/{name}',function($name){
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
 });
+
+Route::get('storage/{filename}', function ($filename)
+{
+    // Add folder path here instead of storing in the database.
+    $path = storage_path('app/public/user/' . $filename);
+    $path2 = storage_path('app/public/file-image/' . $filename);
+
+    if (!File::exists($path)) {
+        // dd($path);
+        $path = $path2;
+        if(!File::exists($path)){
+            dd($path);
+        }
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+})->name('getimg');

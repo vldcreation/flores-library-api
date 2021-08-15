@@ -15,8 +15,17 @@ class BookController extends Controller
         return view('Book.indexBook');
     }
 
+    public function show($id){
+        $books = Book::where('barcode',$id)->get()->toArray();
+        // dd($books);
+        return view('book.detail',['books' => $books[0]]);
+    }
+
     public function store(Request $request){
         $data2 = array();
+        $lastId = Book::pluck('id')->last();
+        $url = url('books/'.$request->input('barcode'));
+        // dd($url);
         if($request->hasfile('gambar_buku')){
             $file = $request->file('gambar_buku');
             $extension = $file->getClientOriginalExtension();
@@ -26,7 +35,7 @@ class BookController extends Controller
                 'public/file-image',$lastfilename
             );
             $data2 = array_merge($request->all(),['gambar_buku' => $lastfilename,
-            'path_gambar' => $path]);
+            'path_gambar' => $path,'url' => $url]);
 
         }
         if($request->hasfile('file_buku')){
@@ -38,7 +47,7 @@ class BookController extends Controller
                 'public/file-pdf',$lastfilename
             );
             $data2 = array_merge($data2,['file_buku' => $lastfilename,
-            'path_file' => $path]);
+            'path_file' => $path,'url' => $url]);
         }
         Book::create($data2);
         return redirect()->route('admin.index');
