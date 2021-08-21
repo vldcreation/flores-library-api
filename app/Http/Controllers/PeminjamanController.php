@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\BookCategory;
 use App\Http\Resources\StatusCode;
 use App\Peminjaman;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 class PeminjamanController extends Controller
@@ -104,6 +107,16 @@ class PeminjamanController extends Controller
     public function index()
     {
         //
+         $books = Book::all();
+         $categorys = BookCategory::all();
+         $members = User::where('role',3)->get();
+         $roles = Role::all();
+         $peminjamans = Peminjaman::all();
+         // $laonUsers = User::where('id',3)->first()->_peminjamans->count();
+         // dd($laonUsers);
+         return view('loan.index',['books' => $books,'members' => $members,
+         'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans
+         ]);
     }
 
     /**

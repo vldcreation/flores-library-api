@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Resources\StatusCode;
 use App\Http\Controllers\UserController as UserCollection;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -35,5 +36,23 @@ class AuthController extends Controller
         ])->get();
 
         return ($user !== null) ? $user : null;
+    }
+
+    public function index(){
+        return view('auth.index');
+    }
+    public function validasi(Request $request){
+        $credentials = $request->only('username','password');
+        // dd($credentials);
+        if(Auth::attempt($credentials)){
+            $request->session()->put('isLogin',true);
+            return redirect()->route('admin.loan.index');
+        }
+        return view('auth.index');
+    }
+
+    public function logout(Request $request){
+        $request->session()->flush();
+        return redirect()->back();
     }
 }

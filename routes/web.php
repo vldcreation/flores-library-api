@@ -29,7 +29,7 @@ Route::post('/uploadImage','BookController@store')->name('uploadImage');
 Route::post('/editBuku/{id}','BookController@update')->name('editbuku');
 
 // Route Resources
-Route::resource('admin', AdminController::class);
+// Route::resource('admin', AdminController::class);
 Route::get('books/{id}', 'BookController@show')->name('loadDetail');
 Route::resource('category', BookCategoryController::class);
 Route::post('/editCategory/{id}', 'BookCategoryController@update')->name('editcat');
@@ -75,3 +75,18 @@ Route::get('storage/{filename}', function ($filename)
 
     return $response;
 })->name('getimg');
+
+Route::group(['middleware' => ['auth']],function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/{index?}', 'AdminController@index')->name('admin.index')->where('index','index');
+        Route::prefix('loan')->group(function () {
+            Route::get('/{index?}','PeminjamanController@index')->name('admin.loan.index')->where('index','index');
+        });
+    });
+});
+
+Route::prefix('auth')->group(function () {
+    Route::get('login', 'AuthController@index')->name('auth.login');
+    Route::post('login', 'AuthController@validasi')->name('auth.validasi');
+    Route::post('logout', 'AuthController@logout')->name('auth.logout');
+});

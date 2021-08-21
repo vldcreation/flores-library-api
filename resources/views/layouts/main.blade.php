@@ -71,7 +71,11 @@
     <!-- [ Pre-loader ] End -->
 
     <!-- [ navigation menu ] start -->
+    @if(isset($nav) && $nav == 'loan')
+        @include('partials.nav.nav-loan')
+    @else
         @include('partials.nav.nav-admin')
+    @endif
     <!-- [ navigation menu ] end -->
 
     <!-- [ Header ] start -->

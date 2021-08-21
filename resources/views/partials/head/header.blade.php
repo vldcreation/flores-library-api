@@ -99,7 +99,7 @@
                             <div class="pro-head">
                                 <img src="../assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
                                 <span>John Doe</span>
-                                <a href="javascript:void(0)" onclick="event.preventDefault();
+                                <a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dud-logout" title="Logout">
                                     <i class="feather icon-log-out"></i>
                                 </a>
@@ -109,9 +109,9 @@
                                 <li><a href="#!" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
                                 <li><a href="#!" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
                                 <li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
-                                <li><a href="javascript:void(0)" onclick="event.preventDefault();
+                                <li><a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
-                                <form id="logout-form" action="javascript:void(0)" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{route('auth.logout')}}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                             </ul>
