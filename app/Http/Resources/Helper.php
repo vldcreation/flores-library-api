@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Resources;
 
+use App\Http\Controllers\ReviewController;
 use App\NotifyAdmin;
 use App\Peminjaman;
 use Illuminate\Support\Str;
@@ -111,5 +112,9 @@ class Helper{
             $peminjamans->last_deadline = true;
             $peminjamans->save();
         }
+    }
+
+    public static function getRating($id_buku){
+       return (new ReviewController)->getBookRating($id_buku);
     }
 }

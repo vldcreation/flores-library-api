@@ -17,7 +17,7 @@ class CreateBookReviewTable extends Migration
             $table->id();
             $table->bigInteger('id_buku')->unsigned();
             $table->bigInteger('id_user')->unsigned();
-            $table->integer('rating');
+            $table->double('rating');
             $table->text('ulasan');
             $table->timestamps();
         });

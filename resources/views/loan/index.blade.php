@@ -269,6 +269,75 @@ $bookCategorys = BookCategory::all();
                                     </div>
                                 <!-- [Modal Tambah Members] end-->
 
+
+                                <!-- [ Book Reviews Section ] start -->
+                                <div class="col-xl-12 col-md-12">
+                                    <div class="card code-table">
+                                        <div class="card-header">
+                                            <h5>Book Reviews</h5>
+                                            <div class="card-header-right">
+                                                <div class="btn-group card-option">
+                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="feather icon-more-horizontal"></i>
+                                                    </button>
+                                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(54px, 41px, 0px);">
+                                                        <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                                        <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                                        <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block pb-0">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Barcode</th>
+                                                            <th>ISBN</th>
+                                                            <th>Judul</th>
+                                                            <th class="text-right">Ratings</th>
+                                                    </tr></thead>
+                                                    <tbody>
+                                                        @foreach($allbooks as $key => $book)
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="mb-1">{{$book->id}}</h6>
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="mb-1">{{ $book->isbn }}</h6>
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="m-b-0"> {{\Str::limit($book->judul,40,' (...)')}} </h6>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                @if(Helper::getRating($book->id)['rating'] > 0)
+                                                                @for($i = 0;$i < Helper::getRating($book->id)['rating']; $i++)
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-c-yellow"></i></a>
+                                                                @endfor
+                                                                @for($i = 0;$i < 5-Helper::getRating(1)['rating']; $i++)
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                @endfor
+                                                                @else
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ Recent Book Reviews ] end -->
+
                             </div>
                             <!-- [ Main Content ] end -->
                         </div>

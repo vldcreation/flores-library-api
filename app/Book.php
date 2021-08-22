@@ -22,4 +22,7 @@ class Book extends Model
     public function _keranjangs(){
         return $this->hasMany(Keranjang::class,'id_buku','id');
     }
+    public function _review(){
+        return $this->hasMany(Review::class,'id_buku','id');
+    }
 }

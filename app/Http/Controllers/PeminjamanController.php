@@ -108,6 +108,7 @@ class PeminjamanController extends Controller
     {
         //
          $books = Book::where('jumlah_buku','>',0)->get();
+         $allbooks = Book::all();
          $categorys = BookCategory::all();
          $members = User::where('role',3)->get();
          $roles = Role::all();
@@ -116,7 +117,8 @@ class PeminjamanController extends Controller
          // $laonUsers = User::where('id',3)->first()->_peminjamans->count();
          // dd($laonUsers);
          return view('loan.index',['books' => $books,'members' => $members,
-         'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans,'notifyAdmins' => $notifyAdmins
+         'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans,'notifyAdmins' => $notifyAdmins,
+         'allbooks' => $allbooks
          ]);
     }
 

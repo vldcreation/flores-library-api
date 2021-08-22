@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NotifyController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Resources\Helper;
 
 date_default_timezone_set("Asia/Jakarta");
@@ -15,4 +16,6 @@ $res = $diff->i +($hours*60);
 // dd($diff);
 // echo $res;
 // Helper::checkLoan(1,time(),1);
-Helper::getRemaningTime('2021-08-22 12:29:31');
+// Helper::getRemaningTime('2021-08-22 12:29:31');
+// echo (new ReviewController)->getBookRating(1)['title'];
+echo Helper::getRating(1)['rating'];
