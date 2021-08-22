@@ -1,3 +1,4 @@
+<?php use App\Http\Resources\Helper; ?>
 <header class="navbar pcoded-header navbar-expand-lg navbar-light">
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
@@ -49,22 +50,23 @@
                                 </div>
                             </div>
                             <ul class="noti-body">
-                                <li class="n-title">
+                                <!-- <li class="n-title">
                                     <p class="m-b-0">NEW</p>
-                                </li>
+                                </li> -->
+                                @foreach($notifyAdmins as $key=>$notif)
                                 <li class="notification">
                                     <div class="media">
-                                        <img class="img-radius" src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
                                         <div class="media-body">
-                                            <p><strong>John Doe</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>30 min</span></p>
-                                            <p>New ticket Added</p>
+                                            <p><strong> {{$notif->judul}} </strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i> {{Helper::getRemaningTime($notif->created_at)}} </span></p>
+                                            <p> {{$notif->deskripsi_singkat}} </p>
                                         </div>
                                     </div>
                                 </li>
-                                <li class="n-title">
+                                @endforeach
+                                <!-- <li class="n-title">
                                     <p class="m-b-0">EARLIER</p>
-                                </li>
-                                <li class="notification">
+                                </li> -->
+                                <!-- <li class="notification">
                                     <div class="media">
                                         <img class="img-radius" src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
                                         <div class="media-body">
@@ -81,7 +83,7 @@
                                             <p>currently login</p>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                             <div class="noti-footer">
                                 <a href="#!">show all</a>

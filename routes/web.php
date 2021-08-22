@@ -3,6 +3,7 @@
 // use App\Http\Controllers\BookCategoryController;
 
 use App\BookCategory;
+use App\Peminjaman;
 use App\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','HomeController@index');
+Route::get('/','AuthController@index');
 Route::get('/demoview','HomeController@demo');
 Route::get('getBook/{bookname}', 'AdminController@getBook')->name('getbook');
 
@@ -71,16 +72,23 @@ Route::get('storage/{filename}', function ($filename)
     $type = File::mimeType($path);
 
     $response = Response::make($file, 200);
+
     $response->header("Content-Type", $type);
 
     return $response;
 })->name('getimg');
 
-Route::group(['middleware' => ['auth']],function () {
+Route::group(['middleware' => ['auth','isAdmin']],function () {
+    Route::get('helper', function () {
+        $id = 4;
+        $peminjamans = Peminjaman::where('id_user',$id)->firstOrFail();
+        return view('bin.helper',compact('peminjamans'));
+    });
     Route::prefix('admin')->group(function () {
         Route::get('/{index?}', 'AdminController@index')->name('admin.index')->where('index','index');
         Route::prefix('loan')->group(function () {
             Route::get('/{index?}','PeminjamanController@index')->name('admin.loan.index')->where('index','index');
+            Route::post('store','PeminjamanController@store')->name('admin.loan.store');
         });
     });
 });

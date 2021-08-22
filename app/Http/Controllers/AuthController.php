@@ -39,12 +39,15 @@ class AuthController extends Controller
     }
 
     public function index(){
+        if(Auth::check())
+            return redirect()->route('admin.index');
         return view('auth.index');
     }
     public function validasi(Request $request){
         $credentials = $request->only('username','password');
         // dd($credentials);
         if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
             $request->session()->put('isLogin',true);
             return redirect()->route('admin.loan.index');
         }

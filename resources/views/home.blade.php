@@ -439,7 +439,7 @@ $bookCategorys = BookCategory::all();
                                                         <tr>
                                                             <td>{{ $book->barcode }}</td>
                                                             <td>{{ $book->isbn }}</td>
-                                                            <td>{{ $book->judul }}<span class="badge badge-pill badge-info pr-2" style="margin-left:10px">{{$book->jumlah_buku}} buku</span></td>
+                                                            <td>{{ $book->judul }}<span class="badge badge-pill badge-info pr-2" style="margin-left:10px">{{($book->jumlah_buku > 0) ? $book->jumlah_buku.' buku' : 'Sedang dipinjam'}}</span></td>
                                                             <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;border:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#exampleModal-{{$book->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
@@ -612,7 +612,7 @@ $bookCategorys = BookCategory::all();
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
-                                                                <input type="number" value="{{$book->jumlah_buku}}" name="jumlah_buku" class="form-control">
+                                                                <input type="number" value="{{$book->jumlah_buku}}" min="0" name="jumlah_buku" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
@@ -643,123 +643,6 @@ $bookCategorys = BookCategory::all();
                                     </div>
                                 </div>
                                 <!-- [ Recent Book ] end -->
-
-                                <!-- [ Data Peminjaman Buku ] start -->
-                                <div class="col-sm-12" id="data-peminjaman-buku">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>Data Peminjaman Buku</h5>
-                                            <div class="card-header-right">
-                                                <div class="btn-group card-option">
-                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="feather icon-more-horizontal"></i>
-                                                    </button>
-                                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(54px, 41px, 0px);">
-                                                        <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                                        <li class="dropdown-item minimize-card"><a href="#!"><span ><i class="feather icon-minus"></i> collapse</span><span style="display: none;"><i class="feather icon-plus"></i> expand</span></a></li>
-                                                        <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                                                        <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block">
-                                            <p>Daftar Alokasi peminjaman buku yang terdapat pada perpustakaan {{ config('app.name') }}</p>
-                                            <div class="table-responsive">
-                                                <table id="table3" class="display table nowrap table-striped table-hover datatable" style="width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nama Member</th>
-                                                            <th>List Buku</th>
-                                                            <th>Tools</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach($members as $key=>$member)
-                                                        <tr>
-                                                            @if($member->_peminjamans->count()>0)
-                                                            <td>{{ $member->name}}</td>
-                                                            <td>
-                                                                <ul>
-                                                                    @foreach($member->_peminjamans as $loan)
-                                                                    <li>
-                                                                        <a  data-toggle="modal" data-target="#loan-detail-{{$loan->id}}" data-whatever="@hehe">
-                                                                            {{$loan->_book['judul']}}
-                                                                        </a>
-                                                                    </li>
-
-                                                                     <!-- [Lihat Detail Loan] start -->
-                                            <div class="modal fade" id="loan-detail-{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-detail-categoryLabel" style="display: none;" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <div class="row">
-                                                                <?php
-                                                                    // get only 3 words
-                                                                    $result = '';
-                                                                    $str = "i want to buy a new car";
-                                                                    preg_match("/\S*\s\S*\s\S*\s\S*\s\S*/", $loan->_book['judul'], $result);
-                                                                ?>
-                                                                    <h5 class="modal-title" style="padding-left:20px;" id="exampleModalLabel"><?= $result[0].'...' ?></h5>
-                                                            </div>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <table width="100%">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Jadwal Pinjam</th>
-                                                                                    <th>Jadwal Kembali</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        {{$loan->jadwal_pinjam}}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{$loan->jadwal_kembali}}
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                                <!-- [Lihat Detail Loan] end -->
-                                                                    @endforeach
-                                                                </ul>
-                                                            </td>
-                                                            <td>
-                                                                <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-data-peminjaman" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
-                                                            </td>
-                                                            @endif
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>Nama Member</th>
-                                                            <th>List Buku</th>
-                                                            <th>Tools</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- [ Recent Data Peminjaman Buku ] end -->
 
                                 <!-- [Modal Tambah Members] start -->
                                 <!-- Scrollable modal -->
@@ -919,7 +802,7 @@ $bookCategorys = BookCategory::all();
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
-                                                                <input type="number" name="jumlah_buku" class="form-control">
+                                                                <input type="number" value="1" min="1" name="jumlah_buku" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>

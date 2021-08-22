@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\BookCategory;
 use App\Http\Resources\StatusCode;
+use App\NotifyAdmin;
 use App\Peminjaman;
 use App\Role;
 use App\User;
@@ -56,9 +57,8 @@ class PeminjamanController extends Controller
         if($data){
             $book = Book::find($request->input('id_buku'));
             if ($book->count() > 0){
-                $curJlh = $book->getOriginal('jumlah_buku');
-                $curJlh -= 1;
-                $book->update(['jumlah_buku' => $curJlh]);
+                $curJlh = $book->jumlah_buku -= 1;
+                $book->update();
             }
             return response()->json([
                 'data' => $data,
@@ -107,15 +107,16 @@ class PeminjamanController extends Controller
     public function index()
     {
         //
-         $books = Book::all();
+         $books = Book::where('jumlah_buku','>',0)->get();
          $categorys = BookCategory::all();
          $members = User::where('role',3)->get();
          $roles = Role::all();
          $peminjamans = Peminjaman::all();
+         $notifyAdmins = NotifyAdmin::all();
          // $laonUsers = User::where('id',3)->first()->_peminjamans->count();
          // dd($laonUsers);
          return view('loan.index',['books' => $books,'members' => $members,
-         'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans
+         'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans,'notifyAdmins' => $notifyAdmins
          ]);
     }
 
@@ -135,9 +136,15 @@ class PeminjamanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        date_default_timezone_set("Asia/Jakarta");
+        $data =  Peminjaman::create(array_merge($request->all(),['status' => $this->getStatus(time())]));
+            $book = Book::findOrFail($request->input('id_buku'));
+            if ($book->count() > 0){
+                $curJlh = $book->jumlah_buku -= 1;
+                $book->update();
+            }
+            return redirect()->back()->with('success_added','Success Added Book');
     }
 
     /**

@@ -7,6 +7,7 @@
 use App\BookCategory;
 use App\Role;
 use Illuminate\Support\Str;
+use App\Http\Resources\Helper;
 $bookCategorys = BookCategory::all();
 ?>
 <style>
@@ -94,6 +95,17 @@ $bookCategorys = BookCategory::all();
                                 <!-- [ Data Peminjaman Buku ] start -->
                                 <div class="col-sm-12" id="kelola-data-peminjaman">
                                     <div class="card">
+                                        <div class="row-alert">
+                                            @if(session('success_added'))
+                                             <script>
+                                                 Swal.fire(
+                                                    'Nice!',
+                                                    session('success_added'),
+                                                    'success'
+                                                    )
+                                             </script>
+                                            @endif
+                                        </div>
                                         <div class="card-header">
                                             <h5>Data Peminjaman Buku</h5>
                                             <div class="card-header-right">
@@ -111,9 +123,10 @@ $bookCategorys = BookCategory::all();
                                             </div>
                                         </div>
                                         <div class="card-block">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-peminjaman">Tambah Data</button>
                                             <p>Daftar Alokasi peminjaman buku yang terdapat pada perpustakaan {{ config('app.name') }}</p>
                                             <div class="table-responsive">
-                                                <table id="table3" class="display table nowrap table-striped table-hover datatable" style="width:100%">
+                                                <table id="table1" class="display table nowrap table-striped table-hover datatable" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th>Nama Member</th>
@@ -158,17 +171,18 @@ $bookCategorys = BookCategory::all();
                                                                         <table width="100%">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Jadwal Pinjam</th>
-                                                                                    <th>Jadwal Kembali</th>
+                                                                                    <th>Tanggal Pinjam</th>
+                                                                                    <th>Tanggal Kembali</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td>
-                                                                                        {{$loan->jadwal_pinjam}}
+                                                                                        {{date('Y-m-d',strtotime($loan->jadwal_pinjam))}}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$loan->jadwal_kembali}}
+                                                                                        {{  Helper::checkLoan($loan->jadwal_kembali,$loan->id_user,$loan->id) }}
+                                                                                        {{date('Y-m-d',strtotime($loan->jadwal_kembali))}}
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -210,7 +224,7 @@ $bookCategorys = BookCategory::all();
 
                                 <!-- [Modal Tambah Members] start -->
                                 <!-- Scrollable modal -->
-                                <div class="modal fade" id="modalTambahMembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal fade" id="modal-tambah-peminjaman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -218,43 +232,31 @@ $bookCategorys = BookCategory::all();
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                                                        <form action="{{ route('admin.loan.store') }}" method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                             <div class="mb-3">
-                                                                <label for="role">Role</label>
-                                                                <select name="role" class="form-control">
-                                                                    @foreach($roles as $key=>$role)
-                                                                    <option value="{{ $role->id }}" {{($role->id == 3 ? 'selected' : '')}}>{{$role->role_name}}</option>
+                                                                <label for="role">Anggota : </label>
+                                                                <select name="id_user" class="form-control">
+                                                                    @foreach($members as $key=>$member)
+                                                                        <option value="{{ $member->id }}">{{$member->name}}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="name" class="form-label">Nama Lengkap</label>
-                                                                <input type="text" name="name" placeholder="eg : Jhony" class="form-control">
+                                                                <label for="role">Buku Dipinjam</label>
+                                                                <select name="id_buku" class="form-control">
+                                                                    @foreach($books as $key=>$book)
+                                                                    <option value="{{ $book->id }}">{{\Str::limit($book->judul,40,' (...)')}}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="JK" class="form-label">Jenis Kelaim</label>
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" class="custom-control-input" value="pria" id="customControlValidation2" name="jenis_kelamin" required="">
-                                                                    <label class="custom-control-label" for="customControlValidation2">Pria</label>
-                                                                </div>
-                                                                <div class="custom-control custom-radio mb-3">
-                                                                    <input type="radio" class="custom-control-input" value="wanita" id="customControlValidation3" name="jenis_kelamin" required="">
-                                                                    <label class="custom-control-label" for="customControlValidation3">Wanita</label>
-                                                                    <div class="invalid-feedback">More example invalid feedback text</div>
-                                                                </div>
+                                                                <label for="date_save" class="form-label">Tanggal Pinjam</label>
+                                                                <input type="date" name="jadwal_pinjam" value="{{ date('m/d/Y',time()) }}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="email" class="form-label">Email</label>
-                                                                <input type="text" name="email" placeholder="eg : jhonny@gmail.com" class="form-control">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="username" class="form-label">Username</label>
-                                                                <input type="text" name="username" placeholder="eg : jhonny... " class="form-control">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="password" class="form-label">Password</label>
-                                                                <input type="password" name="password" placeholder="choose password..." class="form-control">
+                                                                <label for="date_return" class="form-label">Tanggal Kembali</label>
+                                                                <input type="date" name="jadwal_kembali" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>

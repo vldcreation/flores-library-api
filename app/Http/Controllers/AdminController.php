@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\BookCategory;
+use App\NotifyAdmin;
 use App\Peminjaman;
 use App\User;
 use App\Role;
@@ -26,10 +27,12 @@ class AdminController extends Controller
         $members = User::where('role',3)->get();
         $roles = Role::all();
         $peminjamans = Peminjaman::all();
+        $notifyAdmins = NotifyAdmin::all();
         // $laonUsers = User::where('id',3)->first()->_peminjamans->count();
         // dd($laonUsers);
         return view('home',['books' => $books,'members' => $members,
-        'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans
+        'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans,
+        'notifyAdmins' => $notifyAdmins
         ]);
     }
 
