@@ -33,6 +33,9 @@
                     <li data-username="Kelola-data-peminjaman" class="nav-item">
                         <a href="#kelola-data-peminjaman" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Kelola Data Peminjaman</span></a>
                     </li>
+                    <li data-username="review-buku" class="nav-item">
+                        <a href="#review-buku" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Review Buku</span></a>
+                    </li>
                 </ul>
             </div>
         </div>

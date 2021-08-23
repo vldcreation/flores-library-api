@@ -6,7 +6,7 @@
                <div class="b-bg">
                    <i class="mdi mdi-school"></i>
                </div>
-               <span class="b-title">EpicJar</span>
+               <span class="b-title">FloresLibrary</span>
            </a>
         </div>
         <a class="mobile-menu" id="mobile-header" href="#!">
@@ -91,7 +91,6 @@
                         </div>
                     </div>
                 </li>
-                <li><a href="#!" class="displayChatbox"><i class="icon feather icon-mail"></i></a></li>
                 <li>
                     <div class="dropdown drp-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -100,7 +99,7 @@
                         <div class="dropdown-menu dropdown-menu-right profile-notification">
                             <div class="pro-head">
                                 <img src="../assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
-                                <span>John Doe</span>
+                                <span> {{Auth::user()->name}} </span>
                                 <a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dud-logout" title="Logout">
                                     <i class="feather icon-log-out"></i>
@@ -108,9 +107,8 @@
                             </div>
                             
                             <ul class="pro-body">
-                                <li><a href="#!" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
+                                <li><a href="{{route('admin.settings.index')}}" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
                                 <li><a href="#!" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
-                                <li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
                                 <li><a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
                                 <form id="logout-form" action="{{route('auth.logout')}}" method="POST" style="display: none;">

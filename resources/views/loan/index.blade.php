@@ -31,6 +31,61 @@ $bookCategorys = BookCategory::all();
         background: #23b7e5;
         color: #fff;
     }
+
+    /* Title elemen modified */
+    /* title-tip down */
+    .title-tip[title]:hover {
+    position: absolute;
+    }
+    .title-tip[title]:hover:before {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 99999;
+    content: attr(title);
+    margin-top: 0.5em;
+    padding: 0.5em;
+    width: 200px;    /* change it */
+    overflow: hidden;
+    word-wrap: break-word;
+    font-size: inherit;
+    color: #FFF;
+    text-align: center;
+    background-color: #222;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    }
+    .title-tip[title]:hover:after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 99999;
+    content: '';
+    margin-left: -0.125em;
+    width: 0;
+    height: 0;
+    border: 0.25em dashed transparent;
+    border-bottom: 0.25em solid #222;
+    font-size: inherit;
+    }
+
+    /* title-tip-left */
+    .title-tip-left[title]:hover:before {
+    top: auto;
+    left: auto;
+    right: 100%;
+    margin-top: 0;
+    margin-right: 0.5em;
+    }
+    .title-tip-left[title]:hover:after {
+    top: 50%;
+    left: auto;
+    right: 100%;
+    margin-left: 0;
+    margin-top: -0.125em;
+    border: 0.25em dashed transparent;
+    border-left: 0.25em solid #222;
+    }
 </style>
 <script src="https://code.jquery.com/jquery-1.11.0.min.js" integrity="sha256-spTpc4lvj4dOkKjrGokIrHkJgNA0xMS98Pw9N7ir9oI=" crossorigin="anonymous"></script>
 <script>
@@ -130,14 +185,13 @@ $bookCategorys = BookCategory::all();
                                                     <thead>
                                                         <tr>
                                                             <th>Nama Member</th>
-                                                            <th>List Buku</th>
+                                                            <th style="width: 50%;">List Buku</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach($members as $key=>$member)
                                                         <tr>
-                                                            @if($member->_peminjamans->count()>0)
                                                             <td>{{ $member->name}}</td>
                                                             <td>
                                                                 <ul>
@@ -204,14 +258,13 @@ $bookCategorys = BookCategory::all();
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-data-peminjaman" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
                                                             </td>
-                                                            @endif
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
                                                             <th>Nama Member</th>
-                                                            <th>List Buku</th>
+                                                            <th style="width: 50%;">List Buku</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </tfoot>
@@ -271,7 +324,7 @@ $bookCategorys = BookCategory::all();
 
 
                                 <!-- [ Book Reviews Section ] start -->
-                                <div class="col-xl-12 col-md-12">
+                                <div class="col-xl-12 col-md-12" id="review-buku">
                                     <div class="card code-table">
                                         <div class="card-header">
                                             <h5>Book Reviews</h5>
@@ -315,17 +368,17 @@ $bookCategorys = BookCategory::all();
                                                             <td class="text-right">
                                                                 @if(Helper::getRating($book->id)['rating'] > 0)
                                                                 @for($i = 0;$i < Helper::getRating($book->id)['rating']; $i++)
-                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-c-yellow"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}" class="title-tip title-tip-left"><i class="fa fa-star f-18 text-c-yellow"></i></a>
                                                                 @endfor
                                                                 @for($i = 0;$i < 5-Helper::getRating(1)['rating']; $i++)
-                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}" class="title-tip title-tip-left"><i class="fa fa-star f-18 text-black-50"></i></a>
                                                                 @endfor
                                                                 @else
-                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
-                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
-                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
-                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
-                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}" class="title-tip title-tip-left"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}" class="title-tip title-tip-left"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}" class="title-tip title-tip-left"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}" class="title-tip title-tip-left"><i class="fa fa-star f-18 text-black-50"></i></a>
+                                                                <a href="javascript:void(0)" title="{{Helper::getRating($book->id)['title']}}" class="title-tip title-tip-left"><i class="fa fa-star f-18 text-black-50"></i></a>
                                                                 @endif
                                                             </td>
                                                         </tr>

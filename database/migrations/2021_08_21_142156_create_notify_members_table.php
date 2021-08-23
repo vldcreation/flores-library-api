@@ -15,7 +15,7 @@ class CreateNotifyMembersTable extends Migration
     {
         Schema::create('notify_members', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_admin');
+            $table->unsignedBigInteger('id_member');
             $table->string('judul',191);
             $table->string('deskripsi_singkat',191);
             $table->string('slug',255);

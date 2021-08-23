@@ -30,9 +30,9 @@ class Helper{
             return $getMinute.' min';
         }
         else if($getMinute <= self::DATE_DEADLINE_2){
-            return (($getMinute/60) > 1) ? floor(($getMinute/60)).' hours' : floor(($getMinute/60)).' hour';
+            return (floor($getMinute/60) > 1) ? floor(($getMinute/60)).' hours' : floor(($getMinute/60)).' hour';
         }
-        return (($getMinute/self::DATE_DEADLINE_2) > 1) ? floor(($getMinute/self::DATE_DEADLINE_2)).' days' : floor(($getMinute/self::DATE_DEADLINE_2)).' day';
+        return (floor($getMinute/self::DATE_DEADLINE_2) > 1) ? floor(($getMinute/self::DATE_DEADLINE_2)).' days' : floor(($getMinute/self::DATE_DEADLINE_2)).' day';
     }
 
     public static function getDifferenceDate($loan_date){
@@ -69,7 +69,12 @@ class Helper{
             $how_long = 2;
             if($peminjamans->deadline_1 == true)
                 return;
-            $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+            if($how_long > 0)
+                $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+            else if($how_long == 0)
+                $short_desc = 'Hari terakhir pengembalian buku';
+            else
+                $short_desc = 'Terlambat '.$how_long.' hari mengembalikan buku';
             $judul =  User::where('id',$id_member)->first()->only('name')['name'];
             NotifyAdmin::create([
                 'id_member' => $id_member,
@@ -85,7 +90,12 @@ class Helper{
             $how_long = 1;
             if($peminjamans->deadline_2 == true)
                 return;
-            $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+            if($how_long > 0)
+                $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+            else if($how_long == 0)
+                $short_desc = 'Hari terakhir pengembalian buku';
+            else
+                $short_desc = 'Terlambat '.$how_long.' hari mengembalikan buku';
             $judul =  User::where('id',$id_member)->first()->only('name')['name'];
             NotifyAdmin::create([
                 'id_member' => $id_member,
@@ -101,7 +111,12 @@ class Helper{
             $how_long = 0;
             if(Peminjaman::find($loan_id)->firstOrFail()->last_deadline == true)
                 return;
-            $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+            if($how_long > 0)
+                $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+            else if($how_long == 0)
+                $short_desc = 'Hari terakhir pengembalian buku';
+            else
+                $short_desc = 'Terlambat '.$how_long.' hari mengembalikan buku';
             $judul =  User::where('id',$id_member)->first()->only('name')['name'];
             NotifyAdmin::create([
                 'id_member' => $id_member,

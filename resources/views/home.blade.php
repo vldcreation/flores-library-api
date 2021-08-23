@@ -381,6 +381,7 @@ $bookCategorys = BookCategory::all();
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
                                                 <!-- [Edit Category Buku] end -->
                                                         

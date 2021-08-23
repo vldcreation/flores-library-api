@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -56,5 +57,9 @@ class User extends Authenticatable
 
     public function _keranjangs(){
         return $this->hasMany(Keranjang::class,'id_user','id');
+    }
+
+    public function _notifymembers(){
+        return $this->HasMany(NotifyMember::class,'id_user','id');
     }
 }

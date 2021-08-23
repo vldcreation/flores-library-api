@@ -64,7 +64,7 @@ Route::get('storage/{filename}', function ($filename)
         // dd($path);
         $path = $path2;
         if(!File::exists($path)){
-            dd($path);
+            abort(404,'File Not Found');
         }
     }
 
@@ -89,6 +89,11 @@ Route::group(['middleware' => ['auth','isAdmin']],function () {
         Route::prefix('loan')->group(function () {
             Route::get('/{index?}','PeminjamanController@index')->name('admin.loan.index')->where('index','index');
             Route::post('store','PeminjamanController@store')->name('admin.loan.store');
+        });
+        Route::prefix('settings')->group(function () {
+            Route::get('index','SettingsController@index')->name('admin.settings.index');
+            Route::get('edit','SettingsController@edit')->name('admin.settings.edit');
+            Route::post('update','SettingsController@update')->name('admin.settings.update');
         });
     });
 });
