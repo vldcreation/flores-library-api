@@ -55,6 +55,7 @@ Route::delete('deleteCategory/{id}','BookCategoryController@deleteCategory');
 //Book
 Route::get('books','BookController@getBooks');
 Route::get('book/{id}','BookController@getBookById');
+Route::get('book/byKeyword/{keyword}','BookController@getBookByKeyword');
 
 Route::post('addBook','BookController@addBook');
 

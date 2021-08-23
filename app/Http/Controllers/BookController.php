@@ -114,6 +114,21 @@ class BookController extends Controller
         ]);
     }
 
+    public function getBookByKeyword($keyword){
+        $data = Book::where('judul','LIKE',"%$keyword%")->orwhere('barcode','LIKE',"%$keyword%")
+        ->orwhere('deskripsi','LIKE',"%$keyword%")
+        ->get();
+        if($data){
+            return response()->json([
+                'data' => $data,
+                'message' => StatusCode::http_response_code(200)
+            ]);
+        }
+        return response()->json([
+            'message' => StatusCode::http_response_code(404)
+        ]);
+    }
+
     public function addBook(Request $request){
         $data = Book::create(array_merge($request->all(),['path_gambar' => 'assets/file-image/'.$request->input('gambar_buku'),'path_file' => 'assets/file-pdf/'.$request->input('file_buku')]));
         if($data){
