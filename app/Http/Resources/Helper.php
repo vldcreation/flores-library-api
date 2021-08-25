@@ -63,7 +63,7 @@ class Helper{
         $how_long = floor($getDif/60);
         $peminjamans = Peminjaman::find($loan_id)->firstOrFail();
             //2 days left
-            if(($how_long == 2 && $peminjamans->deadline_1 == true) || ($how_long == 1 && $peminjamans->deadline2 == true) || ($how_long == 0 && $peminjamans->last_deadline == true)) // Skip if have send notifications
+            if(($how_long == 2 && $peminjamans->deadline_1 == true) || ($how_long == 1 && $peminjamans->deadline2 == true) || ($how_long == 0 && $peminjamans->last_deadline == true) || ($peminjamans->deadline1 || $peminjamans->deadline2 || $peminjamans->last_deadline)) // Skip if have send notifications
                 return;
             if($how_long > 0)
                 $short_desc = 'Peringatan pengembalian Buku '. $peminjamans->_book()->first()->barcode .' '.$how_long.' hari lagi';
