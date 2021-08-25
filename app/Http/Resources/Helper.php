@@ -49,32 +49,28 @@ class Helper{
     }
 
     public static function checkLoan($loan_date,$id_member,$loan_id){
+        $date1_ts = strtotime(date('Y-m-d'));
+        $date2_ts = strtotime($loan_date);
+        $diff = $date2_ts - $date1_ts;
         $min_days = 3; //assume max day left = 2
-        $getDif = self::getDifferenceDate($loan_date);
-        // @use literally when load data peminjamans , so don't use literaly foreach to this
-        // return function : void
-        // $peminjamans = DB::table('peminjaman as p')
-        // ->where(DB::raw('DATEDIFF(p.jadwal_kembali, now())'),'<' ,$min_days)->get();
-        // dd($peminjamans);
-        if(date_diff(new DateTime('now'),new Datetime($loan_date))->d < $min_days) // loan return have 2 more days left
-            self::sendNotification($id_member,$getDif,$loan_id);
+
+        if(floor($diff/(60*60*24)) < $min_days) // loan return have 2 more days left
+            self::sendNotification($id_member,floor($diff/(60*24)),$loan_id);
     }
 
     public static function sendNotification($id_member,$getDif,$loan_id){
-        $how_long = 0;
         $short_desc = '';$judul = '';
+        $how_long = floor($getDif/60);
         $peminjamans = Peminjaman::find($loan_id)->firstOrFail();
-        if($getDif <= self::DATE_DEADLINE_1 && $getDif > self::DATE_DEADLINE_2){
             //2 days left
-            $how_long = 2;
-            if($peminjamans->deadline_1 == true)
+            if(($how_long == 2 && $peminjamans->deadline_1 == true) || ($how_long == 1 && $peminjamans->deadline2 == true) || ($how_long == 0 && $peminjamans->last_deadline == true)) // Skip if have send notifications
                 return;
             if($how_long > 0)
-                $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+                $short_desc = 'Peringatan pengembalian Buku '. $peminjamans->_book()->first()->barcode .' '.$how_long.' hari lagi';
             else if($how_long == 0)
-                $short_desc = 'Hari terakhir pengembalian buku';
+                $short_desc = 'Hari terakhir pengembalian buku '. $peminjamans->_book()->first()->barcode;
             else
-                $short_desc = 'Terlambat '.$how_long.' hari mengembalikan buku';
+                $short_desc = 'Terlambat '.abs($how_long).' hari mengembalikan buku'. $peminjamans->_book()->first()->barcode;
             $judul =  User::where('id',$id_member)->first()->only('name')['name'];
             NotifyAdmin::create([
                 'id_member' => $id_member,
@@ -82,51 +78,18 @@ class Helper{
                 'deskripsi_singkat' => $short_desc,
                 'slug' => Str::slug('notify-'.$judul)
             ]);
-            $peminjamans->deadline_1 = true;
-            $peminjamans->save();
-        }
-        else if($getDif <= self::DATE_DEADLINE_2 && $getDif > self::DATE_DEADLINE_LAST){
-            //1 day left
-            $how_long = 1;
-            if($peminjamans->deadline_2 == true)
-                return;
-            if($how_long > 0)
-                $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
+            if($how_long == 2)
+                $peminjamans->deadline_1 = true;
+            else if($how_long == 1)
+                $peminjamans->deadline_2 = true;
             else if($how_long == 0)
-                $short_desc = 'Hari terakhir pengembalian buku';
-            else
-                $short_desc = 'Terlambat '.$how_long.' hari mengembalikan buku';
-            $judul =  User::where('id',$id_member)->first()->only('name')['name'];
-            NotifyAdmin::create([
-                'id_member' => $id_member,
-                'judul' => $judul,
-                'deskripsi_singkat' => $short_desc,
-                'slug' => Str::slug('notify-'.$judul)
-            ]);
-            $peminjamans->deadline_2 = true;
+                $peminjamans->last_deadline = true;
+            else{
+                $peminjamans->deadline_1 = true;
+                $peminjamans->deadline_2 = true;         //okay , now deadline was late , set true all notif indicator
+                $peminjamans->last_deadline = true;
+            }
             $peminjamans->save();
-        }
-        else if($getDif <= self::DATE_DEADLINE_LAST){
-            //late
-            $how_long = 0;
-            if(Peminjaman::find($loan_id)->firstOrFail()->last_deadline == true)
-                return;
-            if($how_long > 0)
-                $short_desc = 'Peringatan pengembalian Buku '.$how_long.' hari lagi';
-            else if($how_long == 0)
-                $short_desc = 'Hari terakhir pengembalian buku';
-            else
-                $short_desc = 'Terlambat '.$how_long.' hari mengembalikan buku';
-            $judul =  User::where('id',$id_member)->first()->only('name')['name'];
-            NotifyAdmin::create([
-                'id_member' => $id_member,
-                'judul' => $judul,
-                'deskripsi_singkat' => $short_desc,
-                'slug' => Str::slug('notify-'.$judul)
-            ]);
-            $peminjamans->last_deadline = true;
-            $peminjamans->save();
-        }
     }
 
     public static function getRating($id_buku){
