@@ -70,7 +70,7 @@ class Helper{
             else if($how_long == 0)
                 $short_desc = 'Hari terakhir pengembalian buku '. $peminjamans->_book()->first()->barcode;
             else
-                $short_desc = 'Terlambat '.abs($how_long).' hari mengembalikan buku'. $peminjamans->_book()->first()->barcode;
+                $short_desc = 'Terlambat '.abs($how_long).' hari mengembalikan buku '. $peminjamans->_book()->first()->barcode;
             $judul =  User::where('id',$id_member)->first()->only('name')['name'];
             NotifyAdmin::create([
                 'id_member' => $id_member,
