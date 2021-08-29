@@ -4,11 +4,13 @@
 
 use App\BookCategory;
 use App\Peminjaman;
+use App\TokenApi;
 use App\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +81,12 @@ Route::get('storage/{filename}', function ($filename)
 })->name('getimg');
 
 Route::group(['middleware' => ['auth','isAdmin']],function () {
+    Route::get('generate-api',function(){
+        $tokenApi = TokenApi::first();
+        $tokenApi->api_key = Str::random(255);
+        $tokenApi->save();
+        return response('Success',200);
+    });
     Route::get('helper', function () {
         $id = 4;
         $peminjamans = Peminjaman::where('id_user',$id)->firstOrFail();
