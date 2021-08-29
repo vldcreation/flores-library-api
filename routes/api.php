@@ -21,7 +21,7 @@ use App\TokenApi as API_KEY;
 // });
 
 //Role
-Route::group(['prefix' => '{api_key}', 'where' => ['api_key' => API_KEY::first()->api_key]], function () {
+Route::group(['prefix' => API_KEY::first()->api_key], function () {
     Route::get('profile','SettingsController@profile');
     Route::get('roles','RoleController@getRoles');
     Route::get('role/{id}','RoleController@getRoleById');

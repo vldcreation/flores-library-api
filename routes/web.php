@@ -85,7 +85,10 @@ Route::group(['middleware' => ['auth','isAdmin']],function () {
         $tokenApi = TokenApi::first();
         $tokenApi->api_key = Str::random(255);
         $tokenApi->save();
-        return response('Success',200);
+        return response()->json([
+            'message' => 'Success',
+            'data' => TokenApi::first()
+        ],200);
     });
     Route::get('helper', function () {
         $id = 4;
