@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\FloresProfile;
+use App\Http\Resources\ProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,6 +19,10 @@ class SettingsController extends Controller
         //
         $floresProfile = FloresProfile::first();
         return view('settings.flores-profile.index',compact('floresProfile'));
+    }
+
+    public function profile(){
+        return response()->json(new ProfileResource(FloresProfile::first()));
     }
 
     /**
