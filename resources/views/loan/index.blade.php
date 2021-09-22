@@ -256,7 +256,7 @@ $bookCategorys = BookCategory::all();
                                                                 </ul>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-data-peminjaman" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
+                                                                <a href="{{route('admin.loan.detail',$member->id)}}" class="btn drp-icon btn-sm btn-primary"> <i class="feather icon-eye"></i> </a>
                                                             </td>
                                                         </tr>
                                                         @endforeach

@@ -10,13 +10,11 @@ class NotifyMember extends Model
     protected $table = 'notify_members';
 
     protected $fillable = [
-        'id_member',
-        'judul',
-        'deskripsi_singkat',
-        'slug',
+        'id_user',
+        'deskripsi_panjang',
     ];
 
     public function _member(){
-        return $this->belongsTo(User::class,'id_member','id');
+        return $this->belongsTo(User::class,'id_user','id');
     }
 }

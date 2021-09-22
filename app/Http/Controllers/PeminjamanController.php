@@ -10,6 +10,7 @@ use App\Peminjaman;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use JavaScript;
 
 class PeminjamanController extends Controller
 {
@@ -160,6 +161,10 @@ class PeminjamanController extends Controller
     public function show($id)
     {
         //
+        $member = User::find($id)->with('_peminjamans')->has('_peminjamans')->first();
+        // dd($member);
+        $notifyAdmins = NotifyAdmin::all();
+        return view('user.detail',compact(['member','notifyAdmins']));
     }
 
     /**
