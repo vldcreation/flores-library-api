@@ -64,7 +64,7 @@ class KeranjangController extends Controller
         
         // return self::getStatus(time());
         // dd(date('Y-m-d',$dateForPrice));
-        $keranjangs = Keranjang::create(array_merge($request->all(),['status' => self::getStatus(time())]));
+        $keranjangs = Keranjang::create(array_merge($request->all(),['status' => $this->getStatus(time())]));
         if($keranjangs) {
             return response()->json([
                 'data' => $keranjangs,

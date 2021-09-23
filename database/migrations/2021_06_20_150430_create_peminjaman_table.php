@@ -20,6 +20,9 @@ class CreatePeminjamanTable extends Migration
             $table->dateTime('jadwal_pinjam');
             $table->dateTime('jadwal_kembali');
             $table->string('status');
+            $table->boolean('deadline_1')->default(false)->nullable();
+            $table->boolean('deadline_2')->default(false)->nullable();
+            $table->boolean('last_deadline')->default(false)->nullable();
             $table->timestamps();
         });
     }

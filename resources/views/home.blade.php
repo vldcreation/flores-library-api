@@ -4,6 +4,8 @@
 <?php
 
 use App\BookCategory;
+use App\Role;
+use Illuminate\Support\Str;
 $bookCategorys = BookCategory::all();
 ?>
 <style>
@@ -22,6 +24,10 @@ $bookCategorys = BookCategory::all();
     .img-path>img{
         height: 160px;
         width: 120px;
+    }
+    .pcoded-navbar .pcoded-inner-navbar > li.dasboard-active > a{
+        background: #23b7e5;
+        color: #fff;
     }
 </style>
 <script src="https://code.jquery.com/jquery-1.11.0.min.js" integrity="sha256-spTpc4lvj4dOkKjrGokIrHkJgNA0xMS98Pw9N7ir9oI=" crossorigin="anonymous"></script>
@@ -79,65 +85,9 @@ $bookCategorys = BookCategory::all();
                         <div class="page-wrapper">
                             <!-- [ Main Content ] start -->
                             <div class="row">
-                                <!-- [ Administrator section ] start -->
-                                <div class="col-md-6 col-xl-4">
-                                    <div class="card">
-                                        <div class="card-block">
-                                            <h6 class="mb-4">Pengurus</h6>
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-9">
-                                                    <h3 class="f-w-300 d-flex align-items-center  m-b-0">2</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- [ Administrator section ] end -->
-
-                                <!-- [ Book section ] start -->
-                                <div class="col-md-6 col-xl-4">
-                                    <div class="card">
-                                            <div class="card-block">
-                                                <h6 class="mb-4">Book</h6>
-                                                <div class="row d-flex align-items-center">
-                                                    <div class="col-9">
-                                                        <h3 class="f-w-300 d-flex align-items-center  m-b-0"> {{ $books->count() }} </h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                                <!-- [ Book section ] end -->
-
-                                <!-- [ Book Category header section ] start -->
-                                <div class="col-md-12 col-xl-4">
-                                    <div class="card">
-                                        <div class="card-block">
-                                            <h6 class="mb-4">Kategori Buku</h6>
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-9">
-                                                    <h3 class="f-w-300 d-flex align-items-center  m-b-0">{{ $categorys->count() }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- [ Book Category header section ] end -->
-
-                                 <!-- [ Members headers section ] start -->
-                                <div class="col-md-12 col-xl-4">
-                                    <div class="card">
-                                        <div class="card-block">
-                                            <h6 class="mb-4">Anggota</h6>
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-9">
-                                                    <h3 class="f-w-300 d-flex align-items-center  m-b-0">{{ $members->count() }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- [ Members headers section ] end -->
+                                <!-- [Banner Section] start -->
+                                @include('partials.section.global-banner')
+                                <!-- [Banner Section] end -->
 
                                 <!-- [ Members Section ] start -->
                                 <div class="col-sm-12" id="kelola-anggota">
@@ -159,98 +109,159 @@ $bookCategorys = BookCategory::all();
                                             </div>
                                         </div>
                                         <div class="card-block">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahCategory">Tambah Data</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahMembers">Tambah Data</button>
                                             <p>Daftar Anggota Members di perpustakaan {{ config('app.name') }}</p>
                                             <div class="table-responsive">
                                                 <table id="zero-configuration" class="display table nowrap table-striped table-hover" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>Nama Kategori</th>
+                                                            <th>Nama</th>
+                                                            <th>Email</th>
+                                                            <th>No Telp</th>
+                                                            <th>Tanggal Lahir</th>
+                                                            <th>Jenis Kelamin</th>
+                                                            <th>Alamat</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($bookCategorys as $key=>$category)
+                                                        @foreach($members as $key=>$member)
                                                         <tr>
-                                                            <td>{{ $category->nama_kategori }}</td>
+                                                            <td>{{ $member->name }}</td>
+                                                            <td>{{ $member->email }}</td>
+                                                            <td>{{ str_replace('+62','0',str_replace('-','',$member->no_telp)) }}</td>
+                                                            <td>{{ $member->tanggal_lahir }}</td>
+                                                            <td>{{ $member->jenis_kelamin }}</td>
+                                                            <td>{{ $member->alamat }}</td>
                                                             <td>
-                                                                <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-category-{{$category->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
-                                                                <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modal-edit-category-{{$category->id}}" type="button"><i class="feather icon-edit"></i></button>
-                                                                <button class="btn btn-sm drp-icon btn-danger delete-confirm" data-whatever="{{ $category->judul }}" data-target="{{ route('deletecat',$category->id) }}"  type="button"><i class="feather icon-trash-2"></i></button>
+                                                                <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-member-{{$member->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
+                                                                <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modal-edit-member-{{$member->id}}" type="button"><i class="feather icon-edit"></i></button>
+                                                                <button class="btn btn-sm drp-icon btn-danger delete-confirm" data-whatever="{{ $member->judul }}" data-target="{{ route('deleteMember',$member->id) }}"  type="button"><i class="feather icon-trash-2"></i></button>
                                                             </td>
                                                         </tr>
 
-                                                        <!-- [Lihat Detail Category] start -->
-                                            <div class="modal fade" id="modal-detail-category-{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-detail-categoryLabel" style="display: none;" aria-hidden="true">
+                                                        <!-- [Lihat Detail Member] start -->
+                                                        <div class="modal fade" id="modal-detail-member-{{$member->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Karegori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">{{$member->name}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="container-fluid">
                                                                 <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <label for="List Buku by Kategori">
-                                                                            List Buku :
-                                                                        </label>
-                                                                        @if($bookCategorys[$category->id-1]->allbooks->count() < 1)
-                                                                        Data Tidak Tersedia
-                                                                        @else
-                                                                            @foreach($bookCategorys[$category->id-1]->allbooks as $obj)
-                                                                                <div class="col-12 col-sm-12">
-                                                                                    {{$obj->judul}}
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @endif
+                                                                <div class="col-md-6">
+                                                                    <lable>Email : </lable>
+                                                                    {{$member->email}}
+                                                                </div>
+                                                                <div class="col-md-4 ms-auto img-path">
+                                                                    <img src="{{ route('getimg',$member->profile) }}" alt="">
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                    <span class="badge badge-pill badge-info">{{ $member->no_telp }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-sm-9">
+                                                                    <div class="row">
+                                                                    <div class="col-8 col-sm-12">
+                                                                        <label>Tanggal Lahir : </label>
+                                                                        {{$member->tanggal_lahir}}
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                    <div class="col-8 col-sm-12">
+                                                                        <label>Jenis Kelamin : </label>
+                                                                        {{$member->jenis_kelamin}}
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                    <div class="col-8 col-sm-12">
+                                                                        <label>Alamat : </label>
+                                                                        {{$member->alamat}}
+                                                                    </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                                <!-- [Lihat Detail Category] end -->
+                                                <!-- [Lihat Detail Member] end -->
 
-                                                <!-- [Edit Category Buku ] start -->
-                                                <div class="modal fade" id="modal-edit-category-{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-detail-categoryLabel" style="display: none;" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                <!-- [Edit  Member] end -->
+                                                <div class="modal fade" id="modal-edit-member-{{$member->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Karegori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Data - {{ $member->name }}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                <form class="form-inline" action="{{route('editcat',$category->id)}}" method="POST">
-                                                                    @csrf
-                                                                <div class="form-group mb-2">
-                                                                    <label for="Nama Kategori" class="sr-only">Nama Kategori</label>
-                                                                    <input type="text" name="nama_kategori" class="form-control" id="namakat" value="{{$category->nama_kategori}}">
+                                                        <form action="{{ route('editmember',$member->id) }}" method="POST" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{$member->id}}">
+                                                            <div class="mb-3">
+                                                                <label for="role" class="form-label">Role Akses</label>
+                                                                <select name="role" class="form-control">
+                                                                    @foreach($roles as $key=>$role)
+                                                                    <option value="{{ $role->id }}" {{($role->id == $member->role) ? 'selected' : ''}}>{{$role->role_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="name" class="form-label">Nama Member</label>
+                                                                <input type="text" name="name" value="{{$member->name}}" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Email</label>
+                                                                <input type="text" name="email" value="{{$member->email}}" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="aktivasi" class="form-label">Aktivasi</label>
+                                                                <select name="is_active" class="form-control">
+                                                                    <option value="true" {{($member->is_active == 1) ? 'selected' : ''}}>Aktif</option>
+                                                                    <option value="false" {{($member->is_active == 0) ? 'selected' : ''}}>Non-Aktif</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4 img-path">
+                                                                    <label> Profile : </label>
+                                                                    <img src="{{ route('getimg',$member->profile) }}">
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary mb-2">submit</button>
+                                                                <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
+                                                                    <input type="file" name="profile" value="{{$member->profile}}" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
-                                                                </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                         </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                                <!-- [Edit Category Buku] end -->
+                                                <!-- [Edit Members] end -->
                                                         
                                                         @endforeach
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>Nama Kategori</th>
+                                                            <th>Nama</th>
+                                                            <th>Email</th>
+                                                            <th>No Telp</th>
+                                                            <th>Tanggal Lahir</th>
+                                                            <th>Jenis Kelamin</th>
+                                                            <th>Alamat</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </tfoot>
@@ -308,7 +319,7 @@ $bookCategorys = BookCategory::all();
                                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Karegori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Kategori : {{$category->nama_kategori}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -323,7 +334,9 @@ $bookCategorys = BookCategory::all();
                                                                         @else
                                                                             @foreach($bookCategorys[$category->id-1]->allbooks as $obj)
                                                                                 <div class="col-12 col-sm-12">
-                                                                                    {{$obj->judul}}
+                                                                                    <ul>
+                                                                                        <li>{{$obj->judul}}</li>
+                                                                                    </ul>
                                                                                 </div>
                                                                             @endforeach
                                                                         @endif
@@ -352,11 +365,13 @@ $bookCategorys = BookCategory::all();
                                                                 <div class="row">
                                                                 <form class="form-inline" action="{{route('editcat',$category->id)}}" method="POST">
                                                                     @csrf
-                                                                <div class="form-group mb-2">
+                                                                <div class="form-group mr-2 mb-2">
                                                                     <label for="Nama Kategori" class="sr-only">Nama Kategori</label>
                                                                     <input type="text" name="nama_kategori" class="form-control" id="namakat" value="{{$category->nama_kategori}}">
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary mb-2">submit</button>
+                                                                <div class="form-group mr-2">
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                             </form>
                                                                 </div>
                                                         </div>
@@ -366,6 +381,7 @@ $bookCategorys = BookCategory::all();
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
                                                 <!-- [Edit Category Buku] end -->
                                                         
@@ -382,6 +398,7 @@ $bookCategorys = BookCategory::all();
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                                 <!-- [ Recent Book Category ] end -->
                                 
 
@@ -390,7 +407,7 @@ $bookCategorys = BookCategory::all();
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>Data Buku</h5>
-                                            <!-- <div class="card-header-right">
+                                            <div class="card-header-right">
                                                 <div class="btn-group card-option">
                                                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="feather icon-more-horizontal"></i>
@@ -402,7 +419,7 @@ $bookCategorys = BookCategory::all();
                                                         <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
                                                     </ul>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
                                         <div class="card-block">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Data</button>
@@ -423,8 +440,8 @@ $bookCategorys = BookCategory::all();
                                                         <tr>
                                                             <td>{{ $book->barcode }}</td>
                                                             <td>{{ $book->isbn }}</td>
-                                                            <td>{{ $book->judul }}</td>
-                                                            <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
+                                                            <td>{{ $book->judul }}<span class="badge badge-pill badge-info pr-2" style="margin-left:10px">{{($book->jumlah_buku > 0) ? $book->jumlah_buku.' buku' : 'Sedang dipinjam'}}</span></td>
+                                                            <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;border:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#exampleModal-{{$book->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
                                                                 <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modalEdit-{{$book->id}}" type="button"><i class="feather icon-edit"></i></button>
@@ -448,7 +465,7 @@ $bookCategorys = BookCategory::all();
                                                                     {{$book->penulis}}
                                                                 </div>
                                                                 <div class="col-md-4 ms-auto img-path">
-                                                                    <img src=" {{ asset(Storage::url($book->path_gambar)) }}" alt="">
+                                                                    <img src="{{ route('getimg',$book->gambar_buku) }}" alt="">
                                                                 </div>
                                                                 </div>
                                                                 <div class="row">
@@ -488,13 +505,13 @@ $bookCategorys = BookCategory::all();
                                                                         {{$book->lokasi}}
                                                                     </div>
                                                                     </div>
-                                                                    @if (!is_null($book->file_buku))
                                                                         <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <a href="{{ route('getbook',$book->file_buku) }}" target="_blank" class="btn btn-md btn-primary">Download E-Book</a>
+                                                                            <div class="col-8 col-sm-12">
+                                                                            @if(Str::length($book->file_buku) > 0)
+                                                                            <a target="_blank" href="{{route('getbook',$book->file_buku)}}" class="btn btn-primary">Download E-Book</a>
+                                                                            @endif
                                                                             </div>
                                                                         </div>
-                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -554,7 +571,7 @@ $bookCategorys = BookCategory::all();
                                                             <div class="row">
                                                                 <div class="col-md-4 img-path">
                                                                     <label> gambar saat ini : </label>
-                                                                    <img src="{{ Storage::url($book->path_gambar) }}" alt="{{$book->gambar_buku}}">
+                                                                    <img src="{{ route('getimg',$book->gambar_buku) }}" alt="{{$book->gambar_buku}}">
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
                                                                     <input type="file" name="gambar_buku" value="{{$book->gambar_buku}}" class="form-control">
@@ -563,9 +580,11 @@ $bookCategorys = BookCategory::all();
                                                             <div class="row">
                                                                 <div class="col-md-4">
                                                                     <label for="file buku">
-                                                                        File saat ini : 
-                                                                    </label>
-                                                                    <a href="{{ route('getbook',$book->file_buku) }}" target="_blank" class="btn btn-md btn-primary">Download E-Book</a>
+                                                                        File saat ini :
+                                                                        @if(Str::length($book->file_buku) > 0)
+                                                                            <a target="_blank" href="{{route('getbook',$book->file_buku)}}" class="btn btn-primary">Download E-Book</a>
+                                                                        @endif
+                                                                    </label>getbook
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto">
                                                                     <label for="exampleInputEmail1" class="form-label">file_buku</label>
@@ -591,6 +610,10 @@ $bookCategorys = BookCategory::all();
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">lokasi</label>
                                                                 <input type="text" name="lokasi" value="{{$book->lokasi}}" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
+                                                                <input type="number" value="{{$book->jumlah_buku}}" min="0" name="jumlah_buku" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
@@ -621,6 +644,65 @@ $bookCategorys = BookCategory::all();
                                     </div>
                                 </div>
                                 <!-- [ Recent Book ] end -->
+
+                                <!-- [Modal Tambah Members] start -->
+                                <!-- Scrollable modal -->
+                                <div class="modal fade" id="modalTambahMembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                                                                @csrf
+                                                            <div class="mb-3">
+                                                                <label for="role">Role</label>
+                                                                <select name="role" class="form-control">
+                                                                    @foreach($roles as $key=>$role)
+                                                                    <option value="{{ $role->id }}" {{($role->id == 3 ? 'selected' : '')}}>{{$role->role_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="name" class="form-label">Nama Lengkap</label>
+                                                                <input type="text" name="name" placeholder="eg : Jhony" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="JK" class="form-label">Jenis Kelaim</label>
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" class="custom-control-input" value="pria" id="customControlValidation2" name="jenis_kelamin" required="">
+                                                                    <label class="custom-control-label" for="customControlValidation2">Pria</label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio mb-3">
+                                                                    <input type="radio" class="custom-control-input" value="wanita" id="customControlValidation3" name="jenis_kelamin" required="">
+                                                                    <label class="custom-control-label" for="customControlValidation3">Wanita</label>
+                                                                    <div class="invalid-feedback">More example invalid feedback text</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="email" class="form-label">Email</label>
+                                                                <input type="text" name="email" placeholder="eg : jhonny@gmail.com" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="username" class="form-label">Username</label>
+                                                                <input type="text" name="username" placeholder="eg : jhonny... " class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="password" class="form-label">Password</label>
+                                                                <input type="password" name="password" placeholder="choose password..." class="form-control">
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                <!-- [Modal Tambah Members] end-->
 
                                 <!-- [Modal Tambah Category] start -->
                                 <div class="modal fade" id="modalTambahCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -668,16 +750,16 @@ $bookCategorys = BookCategory::all();
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">ISBN</label>
-                                                                <input type="text" name="isbn" class="form-control">
-                                                            </div>
-                                                            <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">Barcode</label>
                                                                 <input type="text" name="barcode" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">judul</label>
                                                                 <input type="text" name="judul" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1" class="form-label">ISBN</label>
+                                                                <input type="text" name="isbn" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">deskripsi</label>
@@ -719,6 +801,10 @@ $bookCategorys = BookCategory::all();
                                                                 <label for="exampleInputEmail1" class="form-label">lokasi</label>
                                                                 <input type="text" name="lokasi" class="form-control">
                                                             </div>
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
+                                                                <input type="number" value="1" min="1" name="jumlah_buku" class="form-control">
+                                                            </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
                                                         </div>
@@ -737,5 +823,46 @@ $bookCategorys = BookCategory::all();
                 </div>
             </div>
         </div>
+        </div>
+
+        <!-- [Smooth Scrollable] start -->
+        <script>
+            $('a[href*="#"]')
+            // Remove links that don't actually link to anything
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function(event) {
+                // On-page links
+                if (
+                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+                && 
+                location.hostname == this.hostname
+                ) {
+                // Figure out element to scroll to
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                // Does a scroll target exist?
+                if (target.length) {
+                    // Only prevent default if animation is actually gonna happen
+                    event.preventDefault();
+                    $('html, body').animate({
+                    scrollTop: target.offset().top
+                    }, 1000, function() {
+                    // Callback after animation
+                    // Must change focus!
+                    var $target = $(target);
+                    $target.focus();
+                    if ($target.is(":focus")) { // Checking if the target was focused
+                        return false;
+                    } else {
+                        $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                        $target.focus(); // Set focus again
+                    };
+                    });
+                }
+                }
+            });
+        </script>
+        <!-- [Smooth Scrollable] end -->
         
 @endsection

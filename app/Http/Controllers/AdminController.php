@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\BookCategory;
+use App\NotifyAdmin;
+use App\Peminjaman;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -22,12 +25,20 @@ class AdminController extends Controller
         $books = Book::all();
         $categorys = BookCategory::all();
         $members = User::where('role',3)->get();
-        return view('home',['books' => $books,'members' => $members,'categorys' => $categorys]);
+        $roles = Role::all();
+        $peminjamans = Peminjaman::all();
+        $notifyAdmins = NotifyAdmin::all();
+        // $laonUsers = User::where('id',3)->first()->_peminjamans->count();
+        // dd($laonUsers);
+        return view('home',['books' => $books,'members' => $members,
+        'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans,
+        'notifyAdmins' => $notifyAdmins
+        ]);
     }
 
     public function getBook($book_path){
         // dd($book_path);
-        return response()->download(storage_path('/app/public/file-pdf/'. $book_path));
+        return response()->download(storage_path('app/public/file-pdf/'. $book_path));
     }
 
     /**

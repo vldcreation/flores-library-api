@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSomeColumnToBook extends Migration
+class CreateFloresProfileTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class AddSomeColumnToBook extends Migration
      */
     public function up()
     {
-        Schema::table('book', function (Blueprint $table) {
-            //
-            $table->string('gambar_buku',255)->after('penerbit');
-            $table->string('lokasi')->after('subject');
+        Schema::create('flores_profile', function (Blueprint $table) {
+            $table->id();
+            $table->string('judul',191);
+            $table->string('path_image',191);
+            $table->longText('content');
+            $table->timestamps();
         });
     }
 
@@ -27,8 +29,6 @@ class AddSomeColumnToBook extends Migration
      */
     public function down()
     {
-        Schema::table('book', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('flores_profile');
     }
 }

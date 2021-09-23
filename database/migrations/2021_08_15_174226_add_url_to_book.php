@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddBarcodeToBook extends Migration
+class AddUrlToBook extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddBarcodeToBook extends Migration
     {
         Schema::table('book', function (Blueprint $table) {
             //
-            $table->string('barcode',100)->after('id_kategori')->nullable();
+            $table->string('url',255)->after('lokasi')->nullable();
         });
     }
 
@@ -28,6 +28,7 @@ class AddBarcodeToBook extends Migration
     {
         Schema::table('book', function (Blueprint $table) {
             //
+            $table->dropColumn('url');
         });
     }
 }

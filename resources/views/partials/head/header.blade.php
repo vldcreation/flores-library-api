@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<?php use App\Http\Resources\Helper; ?>
+>>>>>>> ba8bf103d14645f832164933e2c2b221a27bf6fa
 <header class="navbar pcoded-header navbar-expand-lg navbar-light">
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
@@ -5,7 +9,11 @@
                <div class="b-bg">
                    <i class="mdi mdi-school"></i>
                </div>
+<<<<<<< HEAD
                <span class="b-title">EpicJar</span>
+=======
+               <span class="b-title">FloresLibrary</span>
+>>>>>>> ba8bf103d14645f832164933e2c2b221a27bf6fa
            </a>
         </div>
         <a class="mobile-menu" id="mobile-header" href="#!">
@@ -49,22 +57,23 @@
                                 </div>
                             </div>
                             <ul class="noti-body">
-                                <li class="n-title">
+                                <!-- <li class="n-title">
                                     <p class="m-b-0">NEW</p>
-                                </li>
+                                </li> -->
+                                @foreach($notifyAdmins as $key=>$notif)
                                 <li class="notification">
                                     <div class="media">
-                                        <img class="img-radius" src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
                                         <div class="media-body">
-                                            <p><strong>John Doe</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>30 min</span></p>
-                                            <p>New ticket Added</p>
+                                            <p><strong> {{$notif->judul}} </strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i> {{Helper::getRemaningTime($notif->created_at)}} </span></p>
+                                            <p> {{$notif->deskripsi_singkat}} </p>
                                         </div>
                                     </div>
                                 </li>
-                                <li class="n-title">
+                                @endforeach
+                                <!-- <li class="n-title">
                                     <p class="m-b-0">EARLIER</p>
-                                </li>
-                                <li class="notification">
+                                </li> -->
+                                <!-- <li class="notification">
                                     <div class="media">
                                         <img class="img-radius" src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
                                         <div class="media-body">
@@ -81,7 +90,7 @@
                                             <p>currently login</p>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                             <div class="noti-footer">
                                 <a href="#!">show all</a>
@@ -89,7 +98,6 @@
                         </div>
                     </div>
                 </li>
-                <li><a href="#!" class="displayChatbox"><i class="icon feather icon-mail"></i></a></li>
                 <li>
                     <div class="dropdown drp-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -98,20 +106,19 @@
                         <div class="dropdown-menu dropdown-menu-right profile-notification">
                             <div class="pro-head">
                                 <img src="../assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
-                                <span>John Doe</span>
-                                <a href="javascript:void(0)" onclick="event.preventDefault();
+                                <span> {{Auth::user()->name}} </span>
+                                <a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dud-logout" title="Logout">
                                     <i class="feather icon-log-out"></i>
                                 </a>
                             </div>
                             
                             <ul class="pro-body">
-                                <li><a href="#!" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
+                                <li><a href="{{route('admin.settings.index')}}" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
                                 <li><a href="#!" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
-                                <li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
-                                <li><a href="javascript:void(0)" onclick="event.preventDefault();
+                                <li><a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
-                                <form id="logout-form" action="javascript:void(0)" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{route('auth.logout')}}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                             </ul>

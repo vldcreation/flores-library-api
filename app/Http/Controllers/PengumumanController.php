@@ -11,9 +11,14 @@ class PengumumanController extends Controller
     //
     public function getPengumuman() {
         $pengumumans = Pengumuman::all();
+        if($pengumumans->count() > 0){
+            return response()->json([
+                'data' => $pengumumans,
+                'message' => StatusCode::http_response_code(200)
+            ]);
+        }
         return response()->json([
-            'data' => $pengumumans,
-            'message' => StatusCode::http_response_code(200)
+            'message' => 'Tidak ada data'
         ]);
     }
 

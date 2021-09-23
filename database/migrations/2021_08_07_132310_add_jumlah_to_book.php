@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeModifierFileBukuFromBook extends Migration
+class AddJumlahToBook extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class ChangeModifierFileBukuFromBook extends Migration
     {
         Schema::table('book', function (Blueprint $table) {
             //
-            $table->string('file_buku',255)->nullable()->change();
+            $table->integer('jumlah_buku')->after('lokasi')->unsigned()->default(1);
         });
     }
 
@@ -28,6 +28,7 @@ class ChangeModifierFileBukuFromBook extends Migration
     {
         Schema::table('book', function (Blueprint $table) {
             //
+            $table->dropColumn('jumlah_buku');
         });
     }
 }

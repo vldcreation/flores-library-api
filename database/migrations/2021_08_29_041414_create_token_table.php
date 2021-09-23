@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameSinopsisFromBook extends Migration
+class CreateTokenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class RenameSinopsisFromBook extends Migration
      */
     public function up()
     {
-        Schema::table('book', function (Blueprint $table) {
-            //
-            $table->renameColumn('sinopsis','deskripsi');
+        Schema::create('token', function (Blueprint $table) {
+            $table->id();
+            $table->string('api_key',255);
+            $table->timestamps();
         });
     }
 
@@ -26,8 +27,6 @@ class RenameSinopsisFromBook extends Migration
      */
     public function down()
     {
-        Schema::table('review', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('token');
     }
 }

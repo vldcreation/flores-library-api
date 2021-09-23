@@ -11,7 +11,7 @@ class Book extends Model
     use Notifiable;
     public $table = "book";
     protected $fillable = [
-        'id_kategori','barcode','isbn','judul','deskripsi','sinopsis','penulis','penerbit','gambar_buku','path_gambar','file_buku','path_file','bahasa','edisi','tahun_terbit','subject','lokasi'
+        'id_kategori', 'barcode', 'isbn', 'judul', 'deskripsi', 'penulis', 'penerbit', 'gambar_buku', 'path_gambar', 'file_buku', 'path_file', 'bahasa', 'edisi', 'tahun_terbit', 'subject', 'lokasi','url','jumlah_buku', 'isAvailable'
     ];
     public function _category(){
         return $this->belongsTo(BookCategory::class,'id_kategori','id');
@@ -21,5 +21,8 @@ class Book extends Model
     }
     public function _keranjangs(){
         return $this->hasMany(Keranjang::class,'id_buku','id');
+    }
+    public function _review(){
+        return $this->hasMany(Review::class,'id_buku','id');
     }
 }
