@@ -90,6 +90,12 @@ Route::group(['middleware' => ['auth','isAdmin']],function () {
             'data' => TokenApi::first()
         ],200);
     });
+    Route::get('get-api',function(){
+        return response()->json([
+            'message' => 'Success',
+            'data' => TokenApi::first()
+        ],200);
+    });
     Route::get('helper', function () {
         $id = 4;
         $peminjamans = Peminjaman::where('id_user',$id)->firstOrFail();
