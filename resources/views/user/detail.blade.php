@@ -83,9 +83,10 @@ use App\Http\Resources\Helper;
                                                                 <th class="text-center">Tanggal Pinjam</th>
                                                                 <th class="text-center">Tanggal Kembali</th>
                                                                 <th class="text-center">Status</th>
+                                                                <th class="text-center"></th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody class="text-center text-muted">
+                                                        <tbody id="tbl-loan" class="text-center text-muted">
                                                             @foreach($member->_peminjamans as $key => $loan)
                                                             <tr>
                                                                 <td>{{$key+1}}</td>
@@ -93,6 +94,9 @@ use App\Http\Resources\Helper;
                                                                 <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_pinjam))}} </td>
                                                                 <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_kembali))}}</td>
                                                                 <td>Dipinjam</td>
+                                                                <td>
+                                                                    <a href="{{route('admin.loan.return',$loan->id)}}" class="btn btn-sm btn-info" onclick="return confirm('Buku akan dikembalikan , Sungguh ?')"> <span class="feather icon-corner-up-left" title="return"></span> </a>
+                                                                </td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -153,9 +157,12 @@ use App\Http\Resources\Helper;
             </div>
         </div>
         <script>
+        //Get Date from last loan
+        var table = document.getElementById("tbl-loan");
+        let lastRow = table.rows[table.rows.length-1];
+        let returnCell = lastRow.cells[lastRow.cells.length-2].innerHTML;
         // Set the date we're counting down to
-        var d = new Date();
-        d.setDate(d.getDate() + 10);
+        var d = new Date(returnCell);
         var countDownDate = new Date(d).getTime();
 
         // Update the count down every 1 second

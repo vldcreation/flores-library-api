@@ -16,12 +16,8 @@ class CreateBookTable extends Migration
         Schema::create('book', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_kategori');
-<<<<<<< HEAD
-            $table->string('isbn')->unique();
-=======
             $table->string('barcode',100)->unique();
             $table->string('isbn')->nullable();
->>>>>>> ba8bf103d14645f832164933e2c2b221a27bf6fa
             $table->string('judul');
             $table->longText('deskripsi')->nullable();
             $table->string('penulis')->nullable();

@@ -106,6 +106,7 @@ Route::group(['middleware' => ['auth','isAdmin']],function () {
         Route::prefix('loan')->group(function () {
             Route::get('/{index?}','PeminjamanController@index')->name('admin.loan.index')->where('index','index');
             Route::get('/detail/{id}','PeminjamanController@show')->name('admin.loan.detail');
+            Route::get('/detail/{id}/return','PeminjamanController@returnB')->name('admin.loan.return');
             Route::post('/postNotify','NotifyController@sendToMember')->name('admin.loan.notifymember');
             Route::get('/deleteNotify/{id}','NotifyController@deleteNotification')->name('admin.loan.deleteNotify');
             Route::post('store','PeminjamanController@store')->name('admin.loan.store');

@@ -112,6 +112,8 @@ class PeminjamanController extends Controller
          $allbooks = Book::all();
          $categorys = BookCategory::all();
          $members = User::where('role',3)->with('_peminjamans')->has('_peminjamans')->get();
+         $allMembers = User::where('role',3)->get();
+        //  dd($members);
          $roles = Role::all();
          $peminjamans = Peminjaman::all();
          $notifyAdmins = NotifyAdmin::all();
@@ -121,7 +123,7 @@ class PeminjamanController extends Controller
          // dd($laonUsers);
          return view('loan.index',['books' => $books,'members' => $members,
          'categorys' => $categorys,'roles' => $roles,'peminjamans' => $peminjamans,'notifyAdmins' => $notifyAdmins,
-         'allbooks' => $allbooks,'memberHasNotif'=> $memberHasNotif
+         'allbooks' => $allbooks,'memberHasNotif'=> $memberHasNotif,'allMembers' => $allMembers
          ]);
     }
 
@@ -143,11 +145,14 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request){
         date_default_timezone_set("Asia/Jakarta");
-        $data =  Peminjaman::create(array_merge($request->all(),['status' => $this->getStatus(time())]));
             $book = Book::findOrFail($request->input('id_buku'));
             if ($book->count() > 0){
+                $data =  Peminjaman::create(array_merge($request->all(),['status' => $this->getStatus(time())]));
                 $curJlh = $book->jumlah_buku -= 1;
                 $book->update();
+            }
+            else{
+                redirect()->back()->with('failed','Buku sedang dipinjam');
             }
             return redirect()->back()->with('success_added','Success Added Book');
     }
@@ -161,7 +166,9 @@ class PeminjamanController extends Controller
     public function show($id)
     {
         //
-        $member = User::find($id)->with('_peminjamans')->has('_peminjamans')->first();
+        $member = User::where('id' , $id)->where('role',3)->first();
+		if(!$member)
+			abort(404);
         // dd($member);
         $notifyAdmins = NotifyAdmin::all();
         return view('user.detail',compact(['member','notifyAdmins']));
@@ -199,5 +206,15 @@ class PeminjamanController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function returnB($id){
+        $peminjaman = Peminjaman::find($id);
+        // dd($peminjaman);
+        $book = Book::find($peminjaman->id_buku);
+        $peminjaman->delete();
+        $book->jumlah_buku += 1;
+        $book->save();
+        return redirect()->back();
     }
 }

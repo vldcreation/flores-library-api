@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 <?php use App\Http\Resources\Helper; ?>
->>>>>>> ba8bf103d14645f832164933e2c2b221a27bf6fa
 <header class="navbar pcoded-header navbar-expand-lg navbar-light">
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
@@ -9,11 +6,7 @@
                <div class="b-bg">
                    <i class="mdi mdi-school"></i>
                </div>
-<<<<<<< HEAD
-               <span class="b-title">EpicJar</span>
-=======
                <span class="b-title">FloresLibrary</span>
->>>>>>> ba8bf103d14645f832164933e2c2b221a27bf6fa
            </a>
         </div>
         <a class="mobile-menu" id="mobile-header" href="#!">

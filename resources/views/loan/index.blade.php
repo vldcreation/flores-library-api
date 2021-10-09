@@ -290,7 +290,7 @@ $bookCategorys = BookCategory::all();
                                                             <div class="mb-3">
                                                                 <label for="role">Anggota : </label>
                                                                 <select name="id_user" class="form-control">
-                                                                    @foreach($members as $key=>$member)
+                                                                    @foreach($allMembers as $key=>$member)
                                                                         <option value="{{ $member->id }}">{{$member->name}}</option>
                                                                     @endforeach
                                                                 </select>
@@ -305,11 +305,11 @@ $bookCategorys = BookCategory::all();
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="date_save" class="form-label">Tanggal Pinjam</label>
-                                                                <input type="date" name="jadwal_pinjam" value="{{ date('m/d/Y',time()) }}" class="form-control">
+                                                                <input type="date" id="jd_pinjam" name="jadwal_pinjam" value="{{ date('m/d/Y',time()) }}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="date_return" class="form-label">Tanggal Kembali</label>
-                                                                <input type="date" name="jadwal_kembali" class="form-control">
+                                                                <input type="date" id="jd_kembali" name="jadwal_kembali" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
@@ -398,6 +398,14 @@ $bookCategorys = BookCategory::all();
                 </div>
             </div>
         </div>
+
+        <!-- Default value to jadwal pinjam & jadwal kembali -->
+        <script>
+            var date = new Date();
+            document.getElementById('jd_pinjam').valueAsDate = date;
+            date.setDate(date.getDate() + 7);
+            document.getElementById('jd_kembali').valueAsDate = date;
+        </script>
 
         <!-- [Smooth Scrollable] start -->
         <script>
