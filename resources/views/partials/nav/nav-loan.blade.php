@@ -24,7 +24,7 @@
                     <li data-username="dashboard Default" class="nav-item dasboard-active">
                         <a href="{{route('admin.loan.index')}}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                            <span class="pcoded-mtext">Dashboard 2</span>
+                            <span class="pcoded-mtext">Kelola Peminjaman</span>
                         </a>
                     </li>
                     <li class="nav-item pcoded-menu-caption">

@@ -68,11 +68,11 @@ use App\Http\Resources\Helper;
                                 <div class="col-xl-8 col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-3"><i class="fas fa-ticket-alt m-r-5"></i> List Buku dipinjam</h5>
+                                            <h5 class="mb-3"><i class="fas fa-ticket-alt m-r-5"></i> Riwayat Pengembalian</h5>
                                         </div>
                                         <div class="card-block">
                                             <div class="m-b-20">
-                                                <h6>List buku dipinjam</h6>
+                                                <h6>Riwayat Pengembalian</h6>
                                                 <hr>
                                                 <div class="table-responsive m-t-20">
                                                     <table class="table m-b-0 f-14 b-solid requid-table">
@@ -83,20 +83,16 @@ use App\Http\Resources\Helper;
                                                                 <th class="text-center">Tanggal Pinjam</th>
                                                                 <th class="text-center">Tanggal Kembali</th>
                                                                 <th class="text-center">Status</th>
-                                                                <th class="text-center"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="tbl-loan" class="text-center text-muted">
-                                                            @foreach($member->_inCart as $key => $loan)
+                                                            @foreach($member->_returned as $key => $loan)
                                                             <tr>
                                                                 <td>{{$key+1}}</td>
                                                                 <td> {{\Str::limit($loan->_book->judul,40,' (...)')}} </td>
                                                                 <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_pinjam))}} </td>
                                                                 <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_kembali))}}</td>
-                                                                <td>Dipinjam</td>
-                                                                <td>
-                                                                    <a href="{{route('admin.loan.return',$loan->id)}}" class="btn btn-sm btn-info" onclick="return confirm('Buku akan dikembalikan , Sungguh ?')"> <span class="feather icon-corner-up-left" title="return"></span> </a>
-                                                                </td>
+                                                                <td>Dikembalikan</td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>

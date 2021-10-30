@@ -55,6 +55,17 @@ class User extends Authenticatable
         return $this->hasMany(Peminjaman::class,'id_user','id');
     }
 
+    // Filter peminjamans by is_return back or not
+    // in cart
+    public function _inCart(){
+        return $this->_peminjamans()->where('is_return','=',0);
+    }
+
+    // has been returned [recap]
+    public function _returned(){
+        return $this->_peminjamans()->where('is_return','=',1);
+    }
+
     public function _keranjangs(){
         return $this->hasMany(Keranjang::class,'id_user','id');
     }

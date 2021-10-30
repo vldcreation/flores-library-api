@@ -14,6 +14,7 @@ class Peminjaman extends Model
         'jadwal_pinjam',
         'jadwal_kembali',
         'status',
+        'is_return',
         'deadline_1',
         'deadline_2',
         'last_deadline'

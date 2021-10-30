@@ -163,7 +163,7 @@ class PeminjamanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
         //
         $member = User::where('id' , $id)->where('role',3)->first();
@@ -171,6 +171,8 @@ class PeminjamanController extends Controller
 			abort(404);
         // dd($member);
         $notifyAdmins = NotifyAdmin::all();
+        if($request->segment(4) == 'returned')
+            return view('user.detail-returned',compact(['member','notifyAdmins']));
         return view('user.detail',compact(['member','notifyAdmins']));
     }
 
