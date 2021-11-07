@@ -21,7 +21,7 @@
                 <div class="row d-flex align-items-center">
                     <div class="col-9">
                         <h3 class="f-w-300 d-flex align-items-center  m-b-0">
-                            {{ $books->sum('jumlah_buku') }}
+                            {{ $books->count() }}
                         </h3>
                     </div>
                 </div>
