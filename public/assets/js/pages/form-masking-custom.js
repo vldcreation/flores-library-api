@@ -32,6 +32,10 @@ $(document).ready(function() {
         mask: "(999) 999-9999"
     });
 
+    $(".id_telephone").inputmask({
+        mask: "(+62) 999-9999-9999"
+    });
+
     $(".ip").inputmask({
         mask: "999.999.999.999"
     });

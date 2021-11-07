@@ -127,12 +127,12 @@ $bookCategorys = BookCategory::all();
                                                     <tbody>
                                                         @foreach($members as $key=>$member)
                                                         <tr>
-                                                            <td>{{ $member->name }}</td>
-                                                            <td>{{ $member->email }}</td>
-                                                            <td>{{ str_replace('+62','0',str_replace('-','',$member->no_telp)) }}</td>
-                                                            <td>{{ $member->tanggal_lahir }}</td>
-                                                            <td>{{ $member->jenis_kelamin }}</td>
-                                                            <td>{{ $member->alamat }}</td>
+                                                            <td>{{ (is_null($member->name)) ? '(not set)' : $member->name }}</td>
+                                                            <td>{{ (is_null($member->email)) ? '(not set)' : $member->email }}</td>
+                                                            <td>{{ (is_null($member->no_telp)) ? '(not set)' : str_replace('+62','0',str_replace('-','',$member->no_telp)) }}</td>
+                                                            <td>{{ (is_null($member->tanggal_lahir)) ? '(not set)' : $member->tanggal_lahir }}</td>
+                                                            <td>{{ (is_null($member->jenis_kelamin)) ? '(not set)' : $member->jenis_kelamin }}</td>
+                                                            <td>{{ (is_null($member->alamat)) ? '(not set)' : $member->alamat }}</td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-member-{{$member->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
                                                                 <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modal-edit-member-{{$member->id}}" type="button"><i class="feather icon-edit"></i></button>
@@ -161,7 +161,7 @@ $bookCategorys = BookCategory::all();
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-sm-12">
-                                                                    <span class="badge badge-pill badge-info">{{ $member->no_telp }}</span>
+                                                                    <span class="badge badge-pill badge-info">{{ str_replace('+62','0',str_replace('-','',$member->no_telp)) }}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -221,6 +221,30 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="name" value="{{$member->name}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
+                                                                <label for="JK" class="form-label">Jenis Kelaim</label>
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" class="custom-control-input" value="pria" id="customControlValidation2-{{$member->id}}" name="jenis_kelamin" {{($member->jenis_kelamin == 'pria') ? 'checked' : ''}}>
+                                                                    <label class="custom-control-label" for="customControlValidation2-{{$member->id}}">Pria</label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio mb-3">
+                                                                    <input type="radio" class="custom-control-input" value="wanita" id="customControlValidation3-{{$member->id}}" name="jenis_kelamin" {{($member->jenis_kelamin == 'wanita') ? 'checked' : ''}}>
+                                                                    <label class="custom-control-label" for="customControlValidation3-{{$member->id}}">Wanita</label>
+                                                                    <div class="invalid-feedback">More example invalid feedback text</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="tl" class="form-label">No Telp</label>
+                                                                <input type="text" value="{{str_replace('+62','',str_replace('-','',$member->no_telp))}}" name="no_telp" class="form-control id_telephone" data-mask="(62) 999-9999-9999">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="tl" class="form-label">Tanggal Lahir</label>
+                                                                <input type="date" value="{{$member->tanggal_lahir}}" name="tanggal_lahir" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="alamat" class="form-label">Alamat</label>
+                                                                <textarea name="alamat" class="form-control">{{$member->alamat}}</textarea>
+                                                            </div>
+                                                            <div class="mb-3">
                                                                 <label for="email" class="form-label">Email</label>
                                                                 <input type="text" name="email" value="{{$member->email}}" class="form-control">
                                                             </div>
@@ -250,7 +274,7 @@ $bookCategorys = BookCategory::all();
                                                 </div>
                                             </div>
 
-                                                <!-- [Edit Members] end -->
+                                                <!-- [Edit Member] end -->
                                                         
                                                         @endforeach
                                                     </tbody>
@@ -440,7 +464,13 @@ $bookCategorys = BookCategory::all();
                                                         <tr>
                                                             <td>{{ $book->barcode }}</td>
                                                             <td>{{ $book->isbn }}</td>
-                                                            <td>{{ $book->judul }}<span class="badge badge-pill badge-info pr-2" style="margin-left:10px">{{($book->jumlah_buku > 0) ? $book->jumlah_buku.' buku' : 'Sedang dipinjam'}}</span></td>
+                                                            <td>{{ $book->judul }}
+                                                                @if($book->isAvailable == 1)
+                                                                    <span class="badge badge-pill badge-info pr-2" style="margin-left:10px">tersedia</span>
+                                                                @else
+                                                                    <span class="badge badge-pill badge-danger pr-2" style="margin-left:10px">sedang dipinjam</span>
+                                                                @endif
+                                                            </td>
                                                             <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;border:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#exampleModal-{{$book->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
@@ -503,6 +533,10 @@ $bookCategorys = BookCategory::all();
                                                                     <div class="col-8 col-sm-12">
                                                                         <label>lokasi : </label>
                                                                         {{$book->lokasi}}
+                                                                    </div>
+                                                                    <div class="col-8 col-sm-12">
+                                                                        <label>Url : </label>
+                                                                        <a href="{{url($book->url)}}" target="_blank" rel="noopener noreferrer">{{url($book->url)}}</a>
                                                                     </div>
                                                                     </div>
                                                                         <div class="row">
@@ -611,10 +645,6 @@ $bookCategorys = BookCategory::all();
                                                                 <label for="exampleInputEmail1" class="form-label">lokasi</label>
                                                                 <input type="text" name="lokasi" value="{{$book->lokasi}}" class="form-control">
                                                             </div>
-                                                            <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
-                                                                <input type="number" value="{{$book->jumlah_buku}}" min="0" name="jumlah_buku" class="form-control">
-                                                            </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
                                                         </div>
@@ -672,14 +702,22 @@ $bookCategorys = BookCategory::all();
                                                             <div class="mb-3">
                                                                 <label for="JK" class="form-label">Jenis Kelaim</label>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input type="radio" class="custom-control-input" value="pria" id="customControlValidation2" name="jenis_kelamin" required="">
-                                                                    <label class="custom-control-label" for="customControlValidation2">Pria</label>
+                                                                    <input type="radio" class="custom-control-input" value="pria" id="customControlValidation4" name="jenis_kelamin" required="">
+                                                                    <label class="custom-control-label" for="customControlValidation4">Pria</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio mb-3">
-                                                                    <input type="radio" class="custom-control-input" value="wanita" id="customControlValidation3" name="jenis_kelamin" required="">
-                                                                    <label class="custom-control-label" for="customControlValidation3">Wanita</label>
+                                                                    <input type="radio" class="custom-control-input" value="wanita" id="customControlValidation5" name="jenis_kelamin" required="">
+                                                                    <label class="custom-control-label" for="customControlValidation5">Wanita</label>
                                                                     <div class="invalid-feedback">More example invalid feedback text</div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="tl" class="form-label">Tanggal Lahir</label>
+                                                                <input type="date" name="tanggal_lahir" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="alamat" class="form-label">Alamat</label>
+                                                                <textarea name="alamat" placeholder="Jl.Anggrek no 16" class="form-control"></textarea>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="email" class="form-label">Email</label>

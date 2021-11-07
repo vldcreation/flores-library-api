@@ -181,7 +181,7 @@ $bookCategorys = BookCategory::all();
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-peminjaman">Tambah Data</button>
                                             <p>Daftar Alokasi peminjaman buku yang terdapat pada perpustakaan {{ config('app.name') }}</p>
                                             <div class="table-responsive">
-                                                <table id="table1" class="display table nowrap table-striped table-hover datatable" style="width:100%">
+                                                <table id="table1" class="table nowrap table-striped table-hover datatable" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th>Nama Member</th>
@@ -201,57 +201,6 @@ $bookCategorys = BookCategory::all();
                                                                             {{$loan->_book['judul']}}
                                                                         </a>
                                                                     </li>
-
-                                                                     <!-- [Lihat Detail Loan] start -->
-                                            <div class="modal fade" id="loan-detail-{{$loan->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-detail-categoryLabel" style="display: none;" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <div class="row">
-                                                                <?php
-                                                                    // get only 3 words
-                                                                    $result = '';
-                                                                    $str = "i want to buy a new car";
-                                                                    preg_match("/\S*\s\S*\s\S*\s\S*\s\S*/", $loan->_book['judul'], $result);
-                                                                ?>
-                                                                    <h5 class="modal-title" style="padding-left:20px;" id="exampleModalLabel"><?= $result[0].'...' ?></h5>
-                                                            </div>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <table width="100%">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Tanggal Pinjam</th>
-                                                                                    <th>Tanggal Kembali</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        {{date('Y-m-d',strtotime($loan->jadwal_pinjam))}}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{  Helper::checkLoan($loan->jadwal_kembali,$loan->id_user,$loan->id) }}
-                                                                                        {{date('Y-m-d',strtotime($loan->jadwal_kembali))}}
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                                <!-- [Lihat Detail Loan] end -->
                                                                     @endforeach
                                                                 </ul>
                                                             </td>
@@ -275,7 +224,7 @@ $bookCategorys = BookCategory::all();
                                 </div>
                                 <!-- [ Recent Data Peminjaman Buku ] end -->
 
-                                <!-- [Modal Tambah Members] start -->
+                                <!-- [Modal Tambah Peminjamans] start -->
                                 <!-- Scrollable modal -->
                                 <div class="modal fade" id="modal-tambah-peminjaman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
@@ -299,7 +248,7 @@ $bookCategorys = BookCategory::all();
                                                                 <label for="role">Buku Dipinjam</label>
                                                                 <select name="id_buku" class="form-control">
                                                                     @foreach($books as $key=>$book)
-                                                                    <option value="{{ $book->id }}">{{\Str::limit($book->judul,40,' (...)')}}</option>
+                                                                    <option value="{{ $book->id }}">{{ $book->barcode.' - '.\Str::limit($book->judul,30,' (...)')}}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -320,7 +269,7 @@ $bookCategorys = BookCategory::all();
                                                     </div>
                                                 </div>
                                     </div>
-                                <!-- [Modal Tambah Members] end-->
+                                <!-- [Modal Tambah Peminjamans] end-->
 
 
                                 <!-- [ Book Reviews Section ] start -->

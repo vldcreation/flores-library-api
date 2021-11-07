@@ -14,6 +14,8 @@ use JavaScript;
 
 class PeminjamanController extends Controller
 {
+    const BOOK_AVAILABLE = true;
+    const BOOK_NOT_AVAILABLE = false;
     public function getStatus($Now){
         $status = "";
         $arrBulan = array('Januari',
@@ -58,7 +60,6 @@ class PeminjamanController extends Controller
         if($data){
             $book = Book::find($request->input('id_buku'));
             if ($book->count() > 0){
-                $curJlh = $book->jumlah_buku -= 1;
                 $book->update();
             }
             return response()->json([
@@ -108,7 +109,7 @@ class PeminjamanController extends Controller
     public function index()
     {
         //
-         $books = Book::where('jumlah_buku','>',0)->get();
+         $books = Book::where('isavailable','=',true)->get();
          $allbooks = Book::all();
          $categorys = BookCategory::all();
          $members = User::where('role',3)->with('_peminjamans')->has('_peminjamans')->get();
@@ -148,8 +149,8 @@ class PeminjamanController extends Controller
             $book = Book::findOrFail($request->input('id_buku'));
             if ($book->count() > 0){
                 $data =  Peminjaman::create(array_merge($request->all(),['status' => $this->getStatus(time())]));
-                $curJlh = $book->jumlah_buku -= 1;
-                $book->update();
+                $book->isavailable = self::BOOK_NOT_AVAILABLE;
+                $book->save();
             }
             else{
                 redirect()->back()->with('failed','Buku sedang dipinjam');
@@ -215,7 +216,7 @@ class PeminjamanController extends Controller
         // dd($peminjaman);
         $book = Book::find($peminjaman->id_buku);
         $peminjaman->delete();
-        $book->jumlah_buku += 1;
+        $book->isavailable = self::BOOK_AVAILABLE;
         $book->save();
         return redirect()->back();
     }

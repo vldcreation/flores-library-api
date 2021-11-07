@@ -14,11 +14,9 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    const BOOK_AVAILABLE = true;
+    const BOOK_NOT_AVAILABLE = false;
+
     public function index()
     {
         //

@@ -17,14 +17,16 @@ class UserController extends Controller
         return redirect()->route('admin.index');
     }
     public function update(Request $request , $id){
+        $request->no_telp = '+'.preg_replace('/[^0-9]/', '', $request->no_telp);
+        // dd($request->no_telp);
+        // dd($request->all());
         $user = User::find($id);
         $status = false;
         if(strcmp($request->input('is_active'),'true')==0)
             $status = true;
         else
             $status = false;
-        // dd($request->all());
-        $data = array_merge($request->all(),['is_active' => $status]);
+        $data = array_merge($request->all(),['no_telp' => $request->no_telp, 'is_active' => $status]);
         if($user->count() > 0){
             if($request->hasFile('profile')){
                 $file = $request->file('profile');

@@ -75,7 +75,7 @@ use App\Http\Resources\Helper;
                                                 <h6>List buku dipinjam</h6>
                                                 <hr>
                                                 <div class="table-responsive m-t-20">
-                                                    <table class="table m-b-0 f-14 b-solid requid-table">
+                                                    <table id="fixed-columns-left-right" class="table table-striped table-hover table-bordered nowrap" style="width:100%">
                                                         <thead>
                                                             <tr class="text-uppercase">
                                                                 <th class="text-center">#</th>

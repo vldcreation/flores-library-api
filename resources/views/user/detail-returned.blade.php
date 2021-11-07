@@ -75,9 +75,9 @@ use App\Http\Resources\Helper;
                                                 <h6>Riwayat Pengembalian</h6>
                                                 <hr>
                                                 <div class="table-responsive m-t-20">
-                                                    <table class="table m-b-0 f-14 b-solid requid-table">
+                                                    <table id="fixed-columns-left-right" class="table table-striped table-hover table-bordered nowrap" style="width:100%">
                                                         <thead>
-                                                            <tr class="text-uppercase">
+                                                            <tr>
                                                                 <th class="text-center">#</th>
                                                                 <th class="text-center">Judul</th>
                                                                 <th class="text-center">Tanggal Pinjam</th>
@@ -85,15 +85,15 @@ use App\Http\Resources\Helper;
                                                                 <th class="text-center">Status</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody id="tbl-loan" class="text-center text-muted">
+                                                        <tbody>
                                                             @foreach($member->_returned as $key => $loan)
-                                                            <tr>
-                                                                <td>{{$key+1}}</td>
-                                                                <td> {{\Str::limit($loan->_book->judul,40,' (...)')}} </td>
-                                                                <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_pinjam))}} </td>
-                                                                <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_kembali))}}</td>
-                                                                <td>Dikembalikan</td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td>{{$key+1}}</td>
+                                                                    <td> {{\Str::limit($loan->_book->judul,40,' (...)')}} </td>
+                                                                    <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_pinjam))}} </td>
+                                                                    <td> <i class="far fa-calendar-alt"></i>&nbsp; {{date('Y-m-d',strtotime($loan->jadwal_kembali))}}</td>
+                                                                    <td>Dikembalikan</td>
+                                                                </tr>
                                                             @endforeach
                                                         </tbody>
                                                     </table>

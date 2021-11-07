@@ -31,6 +31,7 @@ class CreateBookTable extends Migration
             $table->integer('tahun_terbit')->nullable();
             $table->string('subject')->nullable();
             $table->string('lokasi')->nullable();
+            $table->string('url',255)->nullable();
             $table->boolean('isAvailable')->default(true);
             $table->timestamps();
         });

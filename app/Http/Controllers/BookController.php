@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\BookCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use App\Http\Resources\StatusCode;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -95,6 +96,9 @@ class BookController extends Controller
 
     public function getBooks(){
         $data = Book::all();
+        foreach($data as $d):
+            $d['url'] = URL::to('/').'/'.$d['url'];
+        endforeach;
         return response()->json([
             'data' => $data,
             'message' => StatusCode::http_response_code(200)
@@ -102,7 +106,8 @@ class BookController extends Controller
     }
 
     public function getBookById($id){
-        $data = Book::where('id',$id)->orwhere('barcode',$id)->get();
+        $data = Book::where('id',$id)->orwhere('barcode',$id)->get()->toArray();
+        $data[0]['url'] = URL::to('/').'/'.$data[0]['url'];
         if($data){
             return response()->json([
                 'data' => $data,

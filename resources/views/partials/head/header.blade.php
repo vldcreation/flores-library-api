@@ -45,14 +45,23 @@
                             <div class="noti-head">
                                 <h6 class="d-inline-block m-b-0">Notifications</h6>
                                 <div class="float-right">
-                                    <a href="#!" class="m-r-10">mark as read</a>
-                                    <a href="#!">clear all</a>
+                                    <a href="{{route('admin.loan.clear')}}" onclick="return confirm('are you sure?')" class="m-r-10">mark as read</a>
+                                    <a href="{{route('admin.loan.clear')}}" onclick="return confirm('are you sure?')" >clear all</a>
                                 </div>
                             </div>
                             <ul class="noti-body">
                                 <!-- <li class="n-title">
                                     <p class="m-b-0">NEW</p>
                                 </li> -->
+                                @if($notifyAdmins->count() < 1):
+                                    <li class="notification text-center">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p> No Notifications Available </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                @else
                                 @foreach($notifyAdmins as $key=>$notif)
                                 <li class="notification">
                                     <div class="media">
@@ -63,6 +72,7 @@
                                     </div>
                                 </li>
                                 @endforeach
+                                @endif
                                 <!-- <li class="n-title">
                                     <p class="m-b-0">EARLIER</p>
                                 </li> -->

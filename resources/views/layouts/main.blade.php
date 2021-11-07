@@ -32,6 +32,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Data Tables -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/data-tables/css/datatables.min.css') }}">
+    <!-- material datetimepicker css -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
+    <!-- Bootstrap datetimepicker css -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-datetimepicker/css/bootstrap-datepicker3.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/material/css/materialdesignicons.min.css') }}">
     <!-- [Scroll Icon] start -->
     <style>
         .scroll-to-top {
@@ -187,6 +192,18 @@
     <!-- sweet alert Js -->
     <script src="{{ asset('assets/plugins/sweetalert/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/ac-alert.js') }}"></script>
+
+    <!-- Input Mask Js -->
+    <script src="{{ asset('assets/plugins/inputmask/js/inputmask.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/inputmask/js/jquery.inputmask.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/inputmask/js/autoNumeric.js') }}"></script>
+
+    <!-- form picker custome JS -->
+    <script src="{{ asset('assets/js/pages/form-masking-custom.js') }}"></script>
+    
+    <!-- material datetimepicker Js -->
+    <script src="{{ asset('assets/js/downloads/moment-with-locales.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 
 </body>
 

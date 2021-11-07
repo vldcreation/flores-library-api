@@ -3,10 +3,12 @@
 // use App\Http\Controllers\BookCategoryController;
 
 use App\BookCategory;
+use App\NotifyAdmin;
 use App\Peminjaman;
 use App\TokenApi;
 use App\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -104,6 +106,10 @@ Route::group(['middleware' => ['auth','isAdmin']],function () {
     Route::prefix('admin')->group(function () {
         Route::get('/{index?}', 'AdminController@index')->name('admin.index')->where('index','index');
         Route::prefix('loan')->group(function () {
+            Route::get('/clear',function(){
+                DB::table('notify_admin')->truncate();
+                return redirect()->back();
+            })->name('admin.loan.clear');
             Route::get('/{index?}','PeminjamanController@index')->name('admin.loan.index')->where('index','index');
             Route::get('/detail/{id}','PeminjamanController@show')->name('admin.loan.detail');
             Route::get('/detail/returned/{id}','PeminjamanController@show')->name('admin.loan.detail-returned');
