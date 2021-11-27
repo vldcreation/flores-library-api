@@ -298,10 +298,10 @@ $bookCategorys = BookCategory::all();
 
 
                                  <!-- [ Book Category Section ] start -->
-                                 <div class="col-sm-12" id="kelola-kategori-buku">
+                                 <div class="col-sm-12" id="kelola-subject-buku">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>Data Kategori Buku</h5>
+                                            <h5>Data Subject Buku</h5>
                                             <div class="card-header-right">
                                                 <div class="btn-group card-option">
                                                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -318,12 +318,12 @@ $bookCategorys = BookCategory::all();
                                         </div>
                                         <div class="card-block">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahCategory">Tambah Data</button>
-                                            <p>Daftar kategori buku yang terdapat pada perpustakaan {{ config('app.name') }}</p>
+                                            <p>Daftar Subject buku yang terdapat pada perpustakaan {{ config('app.name') }}</p>
                                             <div class="table-responsive">
                                                 <table id="table2" class="display table nowrap table-striped table-hover datatable" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>Nama Kategori</th>
+                                                            <th>Nama Subject</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </thead>
@@ -343,7 +343,7 @@ $bookCategorys = BookCategory::all();
                                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Kategori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Subject : {{$category->nama_kategori}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -381,7 +381,7 @@ $bookCategorys = BookCategory::all();
                                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Karegori : {{$category->nama_kategori}}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Subject : {{$category->nama_kategori}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -390,7 +390,7 @@ $bookCategorys = BookCategory::all();
                                                                 <form class="form-inline" action="{{route('editcat',$category->id)}}" method="POST">
                                                                     @csrf
                                                                 <div class="form-group mr-2 mb-2">
-                                                                    <label for="Nama Kategori" class="sr-only">Nama Kategori</label>
+                                                                    <label for="Nama Subject" class="sr-only">Nama Subject</label>
                                                                     <input type="text" name="nama_kategori" class="form-control" id="namakat" value="{{$category->nama_kategori}}">
                                                                 </div>
                                                                 <div class="form-group mr-2">
@@ -413,7 +413,7 @@ $bookCategorys = BookCategory::all();
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>Nama Kategori</th>
+                                                            <th>Nama Subject</th>
                                                             <th>Tools</th>
                                                         </tr>
                                                     </tfoot>
@@ -525,7 +525,7 @@ $bookCategorys = BookCategory::all();
                                                                     </div>
                                                                     <div class="row">
                                                                     <div class="col-8 col-sm-12">
-                                                                        <label>Subject : </label>
+                                                                        <label>klasifikasi : </label>
                                                                         {{$book->subject}}
                                                                     </div>
                                                                     </div>
@@ -638,7 +638,7 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="tahun_terbit" value="{{$book->tahun_terbit}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">subject</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Klasifikasi</label>
                                                                 <input type="text" name="subject" value="{{$book->subject}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
@@ -754,7 +754,7 @@ $bookCategorys = BookCategory::all();
                                                         <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                             <div class="mb-3">
-                                                                <label for="Nama Kategori" class="form-label">Nama Kategori : </label>
+                                                                <label for="Nama Subject" class="form-label">Nama Subject : </label>
                                                                 <input type="text" name="nama_kategori" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -832,16 +832,12 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="tahun_terbit" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">subject</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Klsifikasi</label>
                                                                 <input type="text" name="subject" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label">lokasi</label>
                                                                 <input type="text" name="lokasi" class="form-control">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">Kuantitas</label>
-                                                                <input type="number" value="1" min="1" name="jumlah_buku" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                             </form>
