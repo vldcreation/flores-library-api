@@ -108,7 +108,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-notification">
                             <div class="pro-head">
-                                <img src="../assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
+                                <img src="{{asset('/assets/images/user/avatar-1.jpg')}}" class="img-radius" alt="User-Profile-Image">
                                 <span> {{Auth::user()->name}} </span>
                                 <a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dud-logout" title="Logout">

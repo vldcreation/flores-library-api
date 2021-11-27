@@ -353,10 +353,10 @@ $bookCategorys = BookCategory::all();
                                                                         <label for="List Buku by Kategori">
                                                                             List Buku :
                                                                         </label>
-                                                                        @if($bookCategorys[$category->id-1]->allbooks->count() < 1)
+                                                                        @if($category->allbooks->count() < 1)
                                                                         Data Tidak Tersedia
                                                                         @else
-                                                                            @foreach($bookCategorys[$category->id-1]->allbooks as $obj)
+                                                                            @foreach($category->allbooks as $obj)
                                                                                 <div class="col-12 col-sm-12">
                                                                                     <ul>
                                                                                         <li>{{$obj->judul}}</li>
@@ -495,7 +495,7 @@ $bookCategorys = BookCategory::all();
                                                                     {{$book->penulis}}
                                                                 </div>
                                                                 <div class="col-md-4 ms-auto img-path">
-                                                                    <img src="{{ route('getimg',$book->gambar_buku) }}" alt="">
+                                                                    <img src="{{ route('getimg',(strlen($book->gambar_buku) > 0) ? $book->gambar_buku : 'default.png') }}" alt="">
                                                                 </div>
                                                                 </div>
                                                                 <div class="row">
@@ -605,7 +605,7 @@ $bookCategorys = BookCategory::all();
                                                             <div class="row">
                                                                 <div class="col-md-4 img-path">
                                                                     <label> gambar saat ini : </label>
-                                                                    <img src="{{ route('getimg',$book->gambar_buku) }}" alt="{{$book->gambar_buku}}">
+                                                                    <img src="{{ route('getimg',(strlen($book->gambar_buku) > 0) ? $book->gambar_buku : 'default.png') }}" alt="{{$book->gambar_buku}}">
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
                                                                     <input type="file" name="gambar_buku" value="{{$book->gambar_buku}}" class="form-control">

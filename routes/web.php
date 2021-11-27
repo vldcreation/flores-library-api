@@ -61,6 +61,8 @@ Route::get('/linkstorage', function () {
 Route::get('storage/{filename}', function ($filename)
 {
     // Add folder path here instead of storing in the database.
+    if(strlen($filename) < 1)
+        $filename = 'default.png';
     $path = storage_path('app/public/user/' . $filename);
     $path2 = storage_path('app/public/file-image/' . $filename);
 

@@ -43,7 +43,7 @@
                     <div class="flex-split">
                         <div class="f-left wow fadeInUp" data-wow-delay="0s">
                             <div class="left-content">
-                                <img class="img-fluid" src="{{route('getimg',$books['gambar_buku'])}}" alt="" />
+                                <img class="img-fluid" src="{{route('getimg',strlen($books['gambar_buku'])>0 ? $books['gambar_buku'] : 'default.png')}}" alt="" />
                             </div>
                         </div>
                         <div class="f-right wow fadeInUp" data-wow-delay="0.2s">
