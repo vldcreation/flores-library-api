@@ -525,13 +525,13 @@ $bookCategorys = BookCategory::all();
                                                                     </div>
                                                                     <div class="row">
                                                                     <div class="col-8 col-sm-12">
-                                                                        <label>klasifikasi : </label>
+                                                                        <label>Klasifikasi : </label>
                                                                         {{$book->subject}}
                                                                     </div>
                                                                     </div>
                                                                     <div class="row">
                                                                     <div class="col-8 col-sm-12">
-                                                                        <label>lokasi : </label>
+                                                                        <label>Lokasi : </label>
                                                                         {{$book->lokasi}}
                                                                     </div>
                                                                     <div class="col-8 col-sm-12">
@@ -571,7 +571,7 @@ $bookCategorys = BookCategory::all();
                                                                 @csrf
                                                             <input type="hidden" name="id" value="{{$book->id}}">
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">Category</label>
+                                                                <label for="Subject" class="form-label">Subject</label>
                                                                 <select name="id_kategori" class="form-control">
                                                                     @foreach($categorys as $key=>$category)
                                                                     <option value="{{ $category->id }}" {{($category->id == $book->id_kategori) ? 'selected' : ''}}>{{$category->nama_kategori}}</option>
@@ -587,24 +587,24 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="barcode" value="{{$book->barcode}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">judul</label>
+                                                                <label for="Judul" class="form-label">Judul</label>
                                                                 <input type="text" name="judul" value="{{$book->judul}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">deskripsi</label>
+                                                                <label for="Deskripsi" class="form-label">Deskripsi</label>
                                                                 <input type="text" name="deskripsi" value="{{$book->deskripsi}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">penulis</label>
+                                                                <label for="Penulis" class="form-label">Penulis</label>
                                                                 <input type="text" name="penulis" value="{{$book->penulis}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">penerbit</label>
+                                                                <label for="Penerbit" class="form-label">Penerbit</label>
                                                                 <input type="text" name="penerbit" value="{{$book->penerbit}}" class="form-control">
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-4 img-path">
-                                                                    <label> gambar saat ini : </label>
+                                                                    <label> Gambar saat ini : </label>
                                                                     <img src="{{ route('getimg',(strlen($book->gambar_buku) > 0) ? $book->gambar_buku : 'default.png') }}" alt="{{$book->gambar_buku}}">
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
@@ -621,20 +621,20 @@ $bookCategorys = BookCategory::all();
                                                                     </label>getbook
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto">
-                                                                    <label for="exampleInputEmail1" class="form-label">file_buku</label>
+                                                                    <label for="FileBuku" class="form-label">File Buku</label>
                                                                     <input type="file" value="{{$book->file_buku}}" name="file_buku" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">bahasa</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Bahasa</label>
                                                                 <input type="text" name="bahasa" value="{{$book->bahasa}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">	edisi</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Edisi</label>
                                                                 <input type="text" name="edisi" value="{{$book->edisi}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">	tahun_terbit</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Tahun Terbit</label>
                                                                 <input type="text" name="tahun_terbit" value="{{$book->tahun_terbit}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
@@ -642,7 +642,7 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="subject" value="{{$book->subject}}" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">lokasi</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Lokasi</label>
                                                                 <input type="text" name="lokasi" value="{{$book->lokasi}}" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -781,6 +781,7 @@ $bookCategorys = BookCategory::all();
                                                         <form action="{{ route('uploadImage') }}" method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                             <div class="mb-3">
+                                                                <label for="Subject" class="form-label">Subject</label>
                                                                 <select name="id_kategori" class="form-control">
                                                                     @foreach($categorys as $key=>$category)
                                                                     <option value="{{ $category->id }}">{{$category->nama_kategori}}</option>
@@ -792,7 +793,7 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="barcode" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">judul</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Judul</label>
                                                                 <input type="text" name="judul" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
@@ -800,43 +801,43 @@ $bookCategorys = BookCategory::all();
                                                                 <input type="text" name="isbn" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">deskripsi</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Deskripsi</label>
                                                                 <input type="text" name="deskripsi" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">penulis</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Penulis</label>
                                                                 <input type="text" name="penulis" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">penerbit</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Penerbit</label>
                                                                 <input type="text" name="penerbit" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">gambar_buku</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Gambar Buku</label>
                                                                 <input type="file" name="gambar_buku" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">file_buku</label>
+                                                                <label for="exampleInputEmail1" class="form-label">File Buku</label>
                                                                 <input type="file" name="file_buku" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">bahasa</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Bahasa</label>
                                                                 <input type="text" name="bahasa" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">	edisi</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Edisi</label>
                                                                 <input type="text" name="edisi" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">	tahun_terbit</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Tahun Terbit</label>
                                                                 <input type="text" name="tahun_terbit" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">Klsifikasi</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Klasifikasi</label>
                                                                 <input type="text" name="subject" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">lokasi</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Lokasi</label>
                                                                 <input type="text" name="lokasi" class="form-control">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>

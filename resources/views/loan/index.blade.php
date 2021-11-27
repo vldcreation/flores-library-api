@@ -271,6 +271,7 @@ $bookCategorys = BookCategory::all();
                                     </div>
                                 <!-- [Modal Tambah Peminjamans] end-->
 
+                                <!-- Handling Book Review (: -->
                                 @if(App\Review::count() > 0)
                                 <!-- [ Book Reviews Section ] start -->
                                 <div class="col-xl-12 col-md-12" id="review-buku">
