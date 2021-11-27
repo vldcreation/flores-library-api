@@ -271,7 +271,7 @@ $bookCategorys = BookCategory::all();
                                     </div>
                                 <!-- [Modal Tambah Peminjamans] end-->
 
-
+                                @if(App\Review::count() > 0)
                                 <!-- [ Book Reviews Section ] start -->
                                 <div class="col-xl-12 col-md-12" id="review-buku">
                                     <div class="card code-table">
@@ -338,6 +338,7 @@ $bookCategorys = BookCategory::all();
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 <!-- [ Recent Book Reviews ] end -->
 
                             </div>
