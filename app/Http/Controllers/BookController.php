@@ -17,9 +17,9 @@ class BookController extends Controller
     }
 
     public function show($id){
-        $books = Book::where('barcode',$id)->get()->toArray();
+        $books = Book::where('barcode',$id)->first();
         // dd($books);
-        return view('Book.detail',['books' => $books[0]]);
+        return view('Book.detail',['books' => $books]);
     }
 
     public function store(Request $request){
