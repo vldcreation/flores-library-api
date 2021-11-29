@@ -98,7 +98,7 @@ class BookController extends Controller
     public function getBooks(){
         $data = Book::all();
         foreach($data as $d):
-            $d['url'] = URL::to('/').'/'.$d['url'];
+            $d['url'] = URL::to('/').'/books/'.$d['barcode'];
         endforeach;
         return response()->json([
             'data' => $data,
