@@ -472,7 +472,7 @@ use Illuminate\Support\Facades\URL;
                                                                     <span class="badge badge-pill badge-danger pr-2" style="margin-left:10px">sedang dipinjam</span>
                                                                 @endif
                                                             </td>
-                                                            <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;border:none;overflow:auto;display:block;" rows="6">{{ $book->deskripsi }}</textarea></td>
+                                                            <td><textarea disabled class="form-control" id="exampleFormControlTextarea1" style="resize:none;border:none;overflow:auto;display:block;">{{ $book->deskripsi }}</textarea></td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#exampleModal-{{$book->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
                                                                 <button class="btn btn-sm drp-icon btn-success" data-toggle="modal" data-target="#modalEdit-{{$book->id}}" type="button"><i class="feather icon-edit"></i></button>
