@@ -35,7 +35,7 @@ class PeminjamanController extends Controller
         $arrDateForPrice = explode('-',date('Y-m-d',$dateForPrice));
         $arrDateForPrice = array_map('intval', $arrDateForPrice);
         $numWeekDay = date('N',$dateForPrice);
-        $status = 'jadwal Pengembalian : '.$arrHari[(int) $numWeekDay-1].','.$arrDateForPrice[2].' '.$arrBulan[$arrDateForPrice[1]].' '.$arrDateForPrice[0];
+        $status = 'jadwal Pengembalian : '.$arrHari[(int) $numWeekDay-1].','.$arrDateForPrice[2].' '.$arrBulan[$arrDateForPrice[1]-1].' '.$arrDateForPrice[0];
         return $status;
     }
 
