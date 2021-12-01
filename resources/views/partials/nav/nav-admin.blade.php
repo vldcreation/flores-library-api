@@ -34,10 +34,10 @@
                         <a href="#kelola-anggota" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Kelola Anggota</span></a>
                     </li>
                     <li class="nav-item pcoded-menu-caption">
-                        <label>Management Kategori Buku</label>
+                        <label>Management Subject Buku</label>
                     </li>
                     <li data-username="Kelola-Kategori-Buku" class="nav-item">
-                        <a href="#kelola-kategori-buku" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Kelola Kategori Buku</span></a>
+                        <a href="#kelola-subject-buku" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Kelola Subject Buku</span></a>
                     </li>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Management Buku</label>

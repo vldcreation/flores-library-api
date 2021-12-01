@@ -1,4 +1,5 @@
-<?php Use App\Http\Controllers\AdminController; ?>
+<?php 
+Use App\Http\Controllers\AdminController;?>
 <nav class="pcoded-navbar">
         <div class="navbar-wrapper">
             <div class="navbar-brand header-logo">
@@ -33,9 +34,11 @@
                     <li data-username="Kelola-data-peminjaman" class="nav-item">
                         <a href="#kelola-data-peminjaman" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Kelola Data Peminjaman</span></a>
                     </li>
+                    @if(App\Review::count() > 0)
                     <li data-username="review-buku" class="nav-item">
                         <a href="#review-buku" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Review Buku</span></a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

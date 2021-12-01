@@ -7,6 +7,7 @@ use App\BookCategory;
 use App\Role;
 use Illuminate\Support\Str;
 $bookCategorys = BookCategory::all();
+use Illuminate\Support\Facades\URL;
 ?>
 <style>
     .btn.btn-icon, .btn.drp-icon{
@@ -536,7 +537,7 @@ $bookCategorys = BookCategory::all();
                                                                     </div>
                                                                     <div class="col-8 col-sm-12">
                                                                         <label>Url : </label>
-                                                                        <a href="{{url($book->url)}}" target="_blank" rel="noopener noreferrer">{{url($book->url)}}</a>
+                                                                        <a href="{{route('loadDetail',$book->barcode)}}" target="_blank" rel="noopener noreferrer">{{Url::to($book->url)}}</a>
                                                                     </div>
                                                                     </div>
                                                                         <div class="row">

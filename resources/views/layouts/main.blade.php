@@ -192,19 +192,21 @@
     <!-- sweet alert Js -->
     <script src="{{ asset('assets/plugins/sweetalert/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/ac-alert.js') }}"></script>
-
+    
     <!-- Input Mask Js -->
     <script src="{{ asset('assets/plugins/inputmask/js/inputmask.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/inputmask/js/jquery.inputmask.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/inputmask/js/autoNumeric.js') }}"></script>
-
+    
     <!-- form picker custome JS -->
     <script src="{{ asset('assets/js/pages/form-masking-custom.js') }}"></script>
     
     <!-- material datetimepicker Js -->
     <script src="{{ asset('assets/js/downloads/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
-
+    
+    <!-- Manually js -->
+    <script src="{{ asset('assets/js/temp/app.js') }}"></script>
 </body>
 
 </html>

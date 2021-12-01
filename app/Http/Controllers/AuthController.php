@@ -49,7 +49,7 @@ class AuthController extends Controller
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
             $request->session()->put('isLogin',true);
-            return redirect()->route('admin.loan.index');
+            return redirect()->route('admin.index');
         }
         return view('auth.index');
     }

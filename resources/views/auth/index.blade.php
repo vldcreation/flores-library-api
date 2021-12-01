@@ -47,7 +47,7 @@
                     <div class="mb-4">
                         <i class="feather icon-user-plus auth-icon"></i>
                     </div>
-                    <h3 class="mb-4">Sign up</h3>
+                    <h3 class="mb-4">Sign in</h3>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>
@@ -60,7 +60,7 @@
                             <label for="checkbox-fill-2" class="cr">Remember me</label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary shadow-2 mb-4">Sign up</button>
+                    <button type="submit" class="btn btn-primary shadow-2 mb-4">Sign in</button>
                     <p class="mb-0 text-muted"><a href="auth/reset"> Forgot Password ?</a></p>
                 </div>
             </div>
