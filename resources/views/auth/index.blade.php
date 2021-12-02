@@ -48,6 +48,11 @@
                         <i class="feather icon-user-plus auth-icon"></i>
                     </div>
                     <h3 class="mb-4">Sign in</h3>
+                    @if (session('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                    @endif
                     <span id="validation-credential" class="text-danger error-text medium credential-error"></span>
                     <div class="spinner-grow spinner-grow-sm text-success" role="status">
                         
@@ -75,7 +80,7 @@
                         <span class="spinner-border spinner-border-sm" role="status"></span>
                         Loading...
                     </button>
-                    <p class="mb-0 text-muted"><a href="auth/reset"> Forgot Password ?</a></p>
+                    <p class="mb-0 text-muted"><a href="{{route('auth.form-reset-password')}}"> Forgot Password ?</a></p>
                 </div>
             </div>
             </form>

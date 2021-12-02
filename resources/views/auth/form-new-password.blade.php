@@ -51,25 +51,32 @@
                     <div class="mb-4">
                         <i class="feather icon-mail auth-icon"></i>
                     </div>
-                    <h3 class="mb-4">Reset Password</h3>
-                    @if (session('message'))
-                        <div class="alert alert-danger">
-                            {{ session('message') }}
-                        </div>
-                    @endif
+                    <h3 class="mb-4">Change Password</h3>
                     <span id="validation-credential" class="text-danger error-text medium credential-error"></span>
                     <div class="spinner-grow spinner-grow-sm text-success" role="status">
                         
                     </div>
-                    <form id="reset-password-form" action="{{route('auth.validasi-reset-password')}}" method="POST">
-                        @csrf
+                    <form id="request-new-password-form" action="{{route('auth.validasi-token-reset-password',['email'=>$data['email'],'token'=>$data['token']])}}" method="POST">
+                        <input type="hidden" name="email" value="{{$data['email']}}">
+                        <div class="input-group text-left">
+                            <label for="password">Password : </label>
+                        </div>
                         <div class="input-group mb-6">
-                            <input type="email" name="email" class="form-control" placeholder="Email...">
+                            <input type="password" name="password" class="form-control" placeholder="Password Baru...">
                         </div>
                         <div class="input-group mb-3">
-                            <label id="validation-email-error" class="text-danger error-text medium email-error" ></label>
+                            <label id="validation-password-error" class="text-danger error-text medium password-error" ></label>
                         </div>
-                        <button id="btn-submit" type="submit" class="btn btn-primary mb-4 shadow-2">Reset Password</button>
+                        <div class="input-group mt-3 text-left">
+                            <label for="Cpassword">Konfirmasi Password : </label>
+                        </div>
+                        <div class="input-group mb-6">
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="Konfirmasi Password...">
+                        </div>
+                        <div class="input-group mb-3">
+                            <label id="validation-password_confirmation-error" class="text-danger error-text medium password_confirmation-error" ></label>
+                        </div>
+                        <button id="btn-submit" type="submit" class="btn btn-primary mb-4 shadow-2">Change Password</button>
                         <button id="btn-spinner" class="btn btn-primary shasow-2 mb-4" type="button" disabled="">
                             <span class="spinner-border spinner-border-sm" role="status"></span>
                             Loading...

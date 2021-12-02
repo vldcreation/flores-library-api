@@ -130,6 +130,10 @@ Route::group(['middleware' => ['auth','isAdmin']],function () {
 
 Route::prefix('auth')->group(function () {
     Route::get('login', 'AuthController@index')->name('auth.login');
+    Route::get('reset-password', 'AuthController@resetPassword')->name('auth.form-reset-password');
+    Route::post('reset-password', 'AuthController@validasiResetPassword')->name('auth.validasi-reset-password');
+    Route::get('validasi-token/{email}/{token}', 'AuthController@formTokenResetPassword')->name('auth.form-token-reset-password');
+    Route::post('validasi-token/{email}/{token}', 'AuthController@validasiTokenResetPassword')->name('auth.validasi-token-reset-password');
     Route::post('login', 'AuthController@validasi')->name('auth.validasi');
     Route::post('logout', 'AuthController@logout')->name('auth.logout');
 });
