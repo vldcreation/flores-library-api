@@ -40,7 +40,7 @@
                 <span class="r s"></span>
                 <span class="r"></span>
             </div>
-            <form action="{{route('auth.validasi')}}" method="POST">
+            <form id="login-form" action="{{route('auth.validasi')}}" method="POST">
                 @csrf
             <div class="card">
                 <div class="card-body text-center">
@@ -48,11 +48,21 @@
                         <i class="feather icon-user-plus auth-icon"></i>
                     </div>
                     <h3 class="mb-4">Sign in</h3>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    <span id="validation-credential" class="text-danger error-text medium credential-error"></span>
+                    <div class="spinner-grow spinner-grow-sm text-success" role="status">
+                        
                     </div>
-                    <div class="input-group mb-4">
+                    <div class="input-group mb-6">
+                        <input type="text" class="form-control" aria-invalid="false" name="username" placeholder="Username">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label id="validation-username-error" class="text-danger error-text medium username-error" ></label>
+                    </div>
+                    <div class="input-group md-6">
                         <input type="password" name="password" class="form-control" placeholder="password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label id="validation-password-error" class="text-danger error-text medium password-error" ></label>
                     </div>
                     <div class="form-group text-left">
                         <div class="checkbox checkbox-fill d-inline">
@@ -60,7 +70,11 @@
                             <label for="checkbox-fill-2" class="cr">Remember me</label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary shadow-2 mb-4">Sign in</button>
+                    <button id="btn-submit" type="submit" class="btn btn-primary shadow-2 mb-4">Sign in</button>
+                    <button id="btn-spinner" class="btn btn-primary shasow-2 mb-4" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status"></span>
+                        Loading...
+                    </button>
                     <p class="mb-0 text-muted"><a href="auth/reset"> Forgot Password ?</a></p>
                 </div>
             </div>
@@ -71,7 +85,8 @@
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js') }}"></script>
         <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{asset('assets/js/pcoded.min.js') }}"></script>
+    <script src="{{asset('assets/js/temp/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{asset('assets/js/temp/form-validate.js') }}"></script>
 
 </body>
 

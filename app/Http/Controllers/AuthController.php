@@ -7,6 +7,7 @@ use App\User;
 use App\Http\Resources\StatusCode;
 use App\Http\Controllers\UserController as UserCollection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -44,14 +45,34 @@ class AuthController extends Controller
         return view('auth.index');
     }
     public function validasi(Request $request){
-        $credentials = $request->only('username','password');
-        // dd($credentials);
-        if(Auth::attempt($credentials)){
-            $request->session()->regenerate();
-            $request->session()->put('isLogin',true);
-            return redirect()->route('admin.index');
+        $validator = Validator::make($request->all(),[
+            'username' => 'required',
+            'password' => 'required|min:6'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'error' => $validator->errors()->toArray(),
+            ]);
         }
-        return view('auth.index');
+        else{
+            $credentials = $request->only('username','password');
+            // dd($credentials);
+            if(Auth::attempt($credentials)){
+                $request->session()->regenerate();
+                $request->session()->put('isLogin',true);
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'login success!'
+                ]);
+            }
+            else{
+                return response()->json([
+                    'status' => 401,
+                    'error' => 'username or password is incorrect',
+                ]);
+            }
+        }
     }
 
     public function logout(Request $request){

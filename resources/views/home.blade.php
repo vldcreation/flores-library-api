@@ -392,7 +392,7 @@ use Illuminate\Support\Facades\URL;
                                                                     @csrf
                                                                 <div class="form-group mr-2 mb-2">
                                                                     <label for="Nama Subject" class="sr-only">Nama Subject</label>
-                                                                    <input type="text" name="nama_kategori" class="form-control" id="namakat" value="{{$category->nama_kategori}}">
+                                                                    <input type="text" name="nama_kategori" class="form-control" value="{{$category->nama_kategori}}">
                                                                 </div>
                                                                 <div class="form-group mr-2">
                                                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -450,7 +450,7 @@ use Illuminate\Support\Facades\URL;
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Data</button>
                                             <p>Daftar buku buku yang terdapat pada perpustakaan {{ config('app.name') }}</p>
                                             <div class="table-responsive">
-                                                <table id="table3" class="display table nowrap table-striped table-hover datatable" style="width:100%">
+                                                <table id="col-reorder" class="display table nowrap table-striped table-hover" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th>Barcode</th>
