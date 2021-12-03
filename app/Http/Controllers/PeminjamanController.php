@@ -10,6 +10,7 @@ use App\Peminjaman;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use JavaScript;
 
 class PeminjamanController extends Controller
@@ -215,9 +216,10 @@ class PeminjamanController extends Controller
         $peminjaman = Peminjaman::find($id);
         // dd($peminjaman);
         $book = Book::find($peminjaman->id_buku);
-        $peminjaman->delete();
+        $peminjaman->is_return = 1;
+        $peminjaman->save();
         $book->isavailable = self::BOOK_AVAILABLE;
         $book->save();
-        return redirect()->back();
+        return redirect()->route('admin.loan.detail-returned',$peminjaman->id_user);
     }
 }

@@ -105,8 +105,8 @@ use App\Http\Resources\Helper;
                                                 <div class="dropdown-secondary dropdown d-inline-block">
                                                     <button class="btn btn btn-primary dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Open</button>
                                                     <div class="dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                                        <a class="dropdown-item active" href="{{route('admin.loan.detail',$member->id)}}">Dipinjam</a>
-                                                        <a class="dropdown-item" href="{{route('admin.loan.detail-returned',$member->id)}}">Dikembalikan</a>
+                                                        <a class="dropdown-item" href="{{route('admin.loan.detail',$member->id)}}">Dipinjam</a>
+                                                        <a class="dropdown-item active" href="{{route('admin.loan.detail-returned',$member->id)}}">Dikembalikan</a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -195,7 +195,7 @@ $bookCategorys = BookCategory::all();
                                                             <td>{{ $member->name}}</td>
                                                             <td>
                                                                 <ul>
-                                                                    @foreach($member->_peminjamans as $loan)
+                                                                    @foreach($member->_inCart as $loan)
                                                                     <li>
                                                                         <a  data-toggle="modal" data-target="#loan-detail-{{$loan->id}}" data-whatever="@hehe">
                                                                             {{$loan->_book['judul']}}
