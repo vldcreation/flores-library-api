@@ -24,7 +24,7 @@ class AdminController extends Controller
         $categorys = BookCategory::all();
         $members = User::where('role',3)->get();
         $roles = Role::all();
-        $peminjamans = Peminjaman::all();
+        $peminjamans = Peminjaman::where('is_return',0)->get();
         $notifyAdmins = NotifyAdmin::all();
         // $laonUsers = User::where('id',3)->first()->_peminjamans->count();
         // dd($laonUsers);
