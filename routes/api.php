@@ -59,6 +59,7 @@ Route::group(['prefix' => API_KEY::first()->api_key], function () {
     //Book
     Route::get('books','BookController@getBooks');
     Route::get('book/{id}','BookController@getBookById');
+    Route::get('book/byCategory/{category}','BookController@getBookByKategory');
     Route::get('book/byKeyword/{keyword}','BookController@getBookByKeyword');
 
     Route::post('addBook','BookController@addBook');

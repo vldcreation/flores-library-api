@@ -121,6 +121,7 @@ class BookController extends Controller
     }
 
     public function getBookByKeyword($keyword){
+
         $data = Book::where('judul','LIKE',"%$keyword%")->orwhere('barcode','LIKE',"%$keyword%")
         ->orwhere('deskripsi','LIKE',"%$keyword%")
         ->get();
@@ -133,6 +134,23 @@ class BookController extends Controller
         return response()->json([
             'message' => StatusCode::http_response_code(404)
         ]);
+    }
+
+    public function getBookByKategory($category){
+        $kategory = BookCategory::where('nama_kategori',$category)->first();
+        if(!$category){
+            // Not found
+            return response()->json([
+                'status' => StatusCode::http_response_code(404),
+                'message' => 'no data exist!'
+            ]);
+        }else{
+            $data = $kategory->allbooks;
+            return response()->json([
+                'status' => StatusCode::http_response_code(200),
+                'data' => $data,
+            ]);
+        };
     }
 
     public function addBook(Request $request){
