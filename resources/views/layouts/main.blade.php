@@ -36,8 +36,10 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
     <!-- Bootstrap datetimepicker css -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-datetimepicker/css/bootstrap-datepicker3.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/fonts/material/css/materialdesignicons.min.css') }}">
     <!-- [Scroll Icon] start -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/material/css/materialdesignicons.min.css') }}">
+    <!--Select dropdown-->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <style>
         .scroll-to-top {
             position: fixed;
@@ -204,6 +206,15 @@
     <!-- material datetimepicker Js -->
     <script src="{{ asset('assets/js/downloads/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+    
+    <!-- Single Select Js -->
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+    
+    <!-- Mutli Select Js -->
+    <script src="{{ asset('assets/plugins/multi-select/js/jquery.quicksearch.js') }}"></script>
+    <script src="{{ asset('assets/plugins/multi-select/js/jquery.multi-select.js') }}"></script>
+    
+    <script src="{{ asset('assets/js/pages/form-select-custom.js') }}"></script>
     
     <!-- Manually js -->
     <script src="{{ asset('assets/js/temp/app.js') }}"></script>

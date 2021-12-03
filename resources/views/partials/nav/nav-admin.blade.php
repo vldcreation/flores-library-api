@@ -21,7 +21,7 @@
                             <span class="pcoded-mtext">Dashboard</span>
                         </a>
                     </li>
-                    <li data-username="dashboard Default" class="nav-item">
+                    <li data-username="Kelola Peminjaman" class="nav-item">
                         <a href="{{route('admin.loan.index')}}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                             <span class="pcoded-mtext">Kelola Peminjaman</span>
@@ -36,7 +36,7 @@
                     <li class="nav-item pcoded-menu-caption">
                         <label>Management Subject Buku</label>
                     </li>
-                    <li data-username="Kelola-Kategori-Buku" class="nav-item">
+                    <li data-username="Kelola-subject-Buku" class="nav-item">
                         <a href="#kelola-subject-buku" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Kelola Subject Buku</span></a>
                     </li>
                     <li class="nav-item pcoded-menu-caption">

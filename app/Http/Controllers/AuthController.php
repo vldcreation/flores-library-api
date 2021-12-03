@@ -131,7 +131,7 @@ class AuthController extends Controller
 
     public function formTokenResetPassword($email,$token){
         $user = User::where('email',$email)->first();
-        $token = PasswordReset::where('email',$email)->first();
+        $token = PasswordReset::where('token',$token)->first();
         if(!$user){
             return redirect()->route('auth.form-reset-password')->with('message','no user credential found!');
         }else{
