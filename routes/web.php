@@ -122,6 +122,9 @@ Route::group(['middleware' => ['auth','isAdmin']],function () {
         });
         Route::prefix('settings')->group(function () {
             Route::get('index','SettingsController@index')->name('admin.settings.index');
+            Route::get('account','SettingsController@accountData')->name('admin.settings.account');
+            Route::post('account/update','SettingsController@accountUpdate')->name('admin.settings.account.update');
+            Route::post('password/update','SettingsController@passwordUpdate')->name('admin.settings.password.update');
             Route::get('edit','SettingsController@edit')->name('admin.settings.edit');
             Route::post('update','SettingsController@update')->name('admin.settings.update');
         });

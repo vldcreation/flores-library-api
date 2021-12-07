@@ -118,7 +118,7 @@
                             
                             <ul class="pro-body">
                                 <li><a href="{{route('admin.settings.index')}}" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
-                                <li><a href="#!" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
+                                <li><a href="{{route('admin.settings.index')}}" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
                                 <li><a href="{{route('auth.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
                                 <form id="logout-form" action="{{route('auth.logout')}}" method="POST" style="display: none;">
