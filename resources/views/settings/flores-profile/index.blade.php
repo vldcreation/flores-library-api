@@ -106,7 +106,7 @@
                                             </div>
                                         </div>
                                         <div class="card-body p-0">
-                                            <a href="{{route('admin.index')}}" style="position: relative;" class="btn btn-sm btn-primary mb-0 ml-3"> <i class="fas fa-arrow-left"></i> Home</a>
+                                            <a href="{{route('admin.index')}}" style="position: relative;" class="btn btn-sm btn-primary mb-0 ml-3"> <i class="fas fa-arrow-left"></i>Home</a>
                                             <ul class="nav nav-pills mb-0" id="pills-tab-struct" role="tablist">
                                                 <li class="nav-item">
                                                     <a class="nav-link show active" id="pills-filestruct-tab" data-toggle="pill" href="#pills-filestruct" role="tab" aria-selected="true">Profile Settings</a>
