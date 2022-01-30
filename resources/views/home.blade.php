@@ -116,6 +116,7 @@ use Illuminate\Support\Facades\URL;
                                                 <table id="zero-configuration" class="display table nowrap table-striped table-hover" style="width:100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>#</th>
                                                             <th>Nama</th>
                                                             <th>Email</th>
                                                             <th>No Telp</th>
@@ -128,6 +129,7 @@ use Illuminate\Support\Facades\URL;
                                                     <tbody>
                                                         @foreach($members as $key=>$member)
                                                         <tr>
+                                                            <td>{{$key+1}}</td>
                                                             <td>{{ (is_null($member->name)) ? '(not set)' : $member->name }}</td>
                                                             <td>{{ (is_null($member->email)) ? '(not set)' : $member->email }}</td>
                                                             <td>{{ (is_null($member->no_telp)) ? '(not set)' : str_replace('+62','0',str_replace('-','',$member->no_telp)) }}</td>
@@ -259,7 +261,7 @@ use Illuminate\Support\Facades\URL;
                                                             <div class="row">
                                                                 <div class="col-md-4 img-path">
                                                                     <label> Profile : </label>
-                                                                    <img src="{{ route('getimg',$member->profile) }}">
+                                                                    <img src="{{ route('getimg',(strlen($member->profile) > 0) ? $member->profile : 'default.png') }}">
                                                                 </div>
                                                                 <div class="col-md-8 ms-auto" style="display:flex;align-items:center;justify-content:flex;">
                                                                     <input type="file" name="profile" value="{{$member->profile}}" class="form-control">
@@ -281,6 +283,7 @@ use Illuminate\Support\Facades\URL;
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
+                                                            <th style= "width : 5%;">#</th>
                                                             <th>Nama</th>
                                                             <th>Email</th>
                                                             <th>No Telp</th>
@@ -324,6 +327,7 @@ use Illuminate\Support\Facades\URL;
                                                 <table id="table2" class="display table nowrap table-striped table-hover datatable" style="width:100%">
                                                     <thead>
                                                         <tr>
+                                                            <th style= "width : 5%;">#</th>
                                                             <th>Nama Subject</th>
                                                             <th>Tools</th>
                                                         </tr>
@@ -331,6 +335,7 @@ use Illuminate\Support\Facades\URL;
                                                     <tbody>
                                                         @foreach($bookCategorys as $key=>$category)
                                                         <tr>
+                                                            <td>{{ $key+1 }}</td>
                                                             <td>{{ $category->nama_kategori }}</td>
                                                             <td>
                                                                 <button class="btn btn-sm drp-icon btn-primary" data-toggle="modal" data-target="#modal-detail-category-{{$category->id}}" data-whatever="@hehe"><i class="feather icon-eye"></i></button>
@@ -414,6 +419,7 @@ use Illuminate\Support\Facades\URL;
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
+                                                            <th style= "width : 5%;">#</th>
                                                             <th>Nama Subject</th>
                                                             <th>Tools</th>
                                                         </tr>
@@ -453,6 +459,7 @@ use Illuminate\Support\Facades\URL;
                                                 <table id="col-reorder" class="display table nowrap table-striped table-hover" style="width:100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>#</th>
                                                             <th>Barcode</th>
                                                             <th>ISBN</th>
                                                             <th>Judul</th>
@@ -463,6 +470,7 @@ use Illuminate\Support\Facades\URL;
                                                     <tbody>
                                                         @foreach($books as $key=>$book)
                                                         <tr>
+                                                            <td>{{$key+1}}</td>
                                                             <td>{{ $book->barcode }}</td>
                                                             <td>{{ $book->isbn }}</td>
                                                             <td>{{ $book->judul }}
@@ -662,6 +670,7 @@ use Illuminate\Support\Facades\URL;
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
+                                                            <th style= "width : 5%;">#</th>
                                                             <th>Barcode</th>
                                                             <th>ISBN</th>
                                                             <th>Judul</th>
@@ -900,5 +909,24 @@ use Illuminate\Support\Facades\URL;
             });
         </script>
         <!-- [Smooth Scrollable] end -->
+        
+        <script>
+            $('.delete-confirm').on('click', function (event) {
+    event.preventDefault();
+    const url = $(this).attr('data-target');
+    // console.log(url);
+    var bookName = $(this).attr('data-whatever');
+    swal({
+        title: 'Are you sure?',
+        text: bookName.concat(' will be permanantly deleted!'),
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+    }).then(function(value) {
+        if (value) {
+            window.location.href = url;
+        }
+    });
+});
+        </script>
         
 @endsection

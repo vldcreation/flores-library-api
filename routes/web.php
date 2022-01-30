@@ -70,7 +70,7 @@ Route::get('storage/{filename}', function ($filename)
         // dd($path);
         $path = $path2;
         if(!File::exists($path)){
-            abort(404,'File Not Found');
+            $path = storage_path('app/public/default.png');
         }
     }
 

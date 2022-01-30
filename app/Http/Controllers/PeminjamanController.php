@@ -117,7 +117,7 @@ class PeminjamanController extends Controller
          $allMembers = User::where('role',3)->get();
         //  dd($members);
          $roles = Role::all();
-         $peminjamans = Peminjaman::all();
+         $peminjamans = Peminjaman::where('is_return',0)->get();
          $notifyAdmins = NotifyAdmin::all();
          $memberHasNotif = User::with('_notifymembers')->has('_notifymembers')->get();
         //  dd($membershavenotif);

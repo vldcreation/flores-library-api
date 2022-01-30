@@ -20,9 +20,9 @@ class AdminController extends Controller
     public function index()
     {
         //
-        $books = Book::all();
+        $books =  Book::where('isavailable','=',true)->get();
         $categorys = BookCategory::all();
-        $members = User::where('role',3)->get();
+        $members = User::where('role',3)->orderBy('id','desc')->get();
         $roles = Role::all();
         $peminjamans = Peminjaman::where('is_return',0)->get();
         $notifyAdmins = NotifyAdmin::all();
